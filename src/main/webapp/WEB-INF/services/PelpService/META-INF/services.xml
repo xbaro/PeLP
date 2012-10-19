@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<serviceGroup>
+    <service name="PelpService">
+        <description>Generic services for PELP</description>
+        <parameter name="ServiceObjectSupplier" locked="false">org.apache.axis2.extensions.spring.receivers.SpringServletContextObjectSupplier</parameter>
+        <parameter name="SpringBeanName" locked="false">pelpService</parameter>        
+        <operation name="getUserSujects">
+            <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+        </operation>
+        <!--<operation name="addDeliver">
+            <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+        </operation>
+        <operation name="getDelivers">
+            <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+        </operation>-->
+    </service>
+</serviceGroup>
