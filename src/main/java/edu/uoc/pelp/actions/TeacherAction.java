@@ -23,7 +23,6 @@ import edu.uoc.pelp.bussines.UOC.UOCPelpBussines;
 import edu.uoc.pelp.bussines.UOC.vo.UOCClassroom;
 import edu.uoc.pelp.bussines.UOC.vo.UOCSubject;
 import edu.uoc.pelp.bussines.vo.Activity;
-import edu.uoc.pelp.engine.campus.Classroom;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.ResultPath;
@@ -34,84 +33,84 @@ import org.apache.struts2.convention.annotation.ResultPath;
 
 @Namespace("/")
 @ResultPath(value = "/")
-@Result(name = "success", location = "jsp/teacher.jsp")
+@Result(name = "success", location = "WEB-INF/jsp/teacher.jsp")
 public class TeacherAction extends ActionSupport {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private UOCPelpBussines bussines;
+    private UOCPelpBussines bussines;
 
-	private UOCSubject[] listSubjects;
-	private UOCClassroom[] listClassroms;
-	private Activity[] listActivity;
+    private UOCSubject[] listSubjects;
+    private UOCClassroom[] listClassroms;
+    private Activity[] listActivity;
 
-        private String s_semester;
-	private String s_assign;
-	private String s_aula;
-	private String s_activ;
+    private String s_semester;
+    private String s_assign;
+    private String s_aula;
+    private String s_activ;
 
     @Override
-	public String execute() throws Exception {		
-		listSubjects = bussines.getUserSubjects();
-		listClassroms = bussines.getUserClassrooms(new UOCSubject(s_semester,s_assign));
-		listActivity = bussines.getSubjectActivities(new UOCSubject(s_semester,s_assign));
-		return SUCCESS;
-	}
+    public String execute() throws Exception {		
+        //listSubjects = bussines.getUserSubjects();
+        //listClassroms = bussines.getUserClassrooms(new UOCSubject(s_semester,s_assign));
+        //listActivity = bussines.getSubjectActivities(new UOCSubject(s_semester,s_assign));
+        return SUCCESS;
+    }
 
-	public UOCSubject[] getListSubjects() {
-		return listSubjects;
-	}
+    public UOCSubject[] getListSubjects() {
+        return listSubjects;
+    }
 
-	public void setListSubjects(UOCSubject[] listSubjects) {
-		this.listSubjects = listSubjects;
-	}
+    public void setListSubjects(UOCSubject[] listSubjects) {
+        this.listSubjects = listSubjects;
+    }
 
-	public UOCPelpBussines getBussines() {
-		return bussines;
-	}
+    public UOCPelpBussines getBussines() {
+        return bussines;
+    }
 
-	public void setBussines(UOCPelpBussines bussines) {
-		this.bussines = bussines;
-	}
+    public void setBussines(UOCPelpBussines bussines) {
+        this.bussines = bussines;
+    }
 
-	public String getS_assign() {
-		return s_assign;
-	}
+    public String getS_assign() {
+        return s_assign;
+    }
 
-	public void setS_assign(String s_assign) {
-		this.s_assign = s_assign;
-	}
+    public void setS_assign(String s_assign) {
+        this.s_assign = s_assign;
+    }
 
-	public UOCClassroom[] getListClassroms() {
-		return listClassroms;
-	}
+    public UOCClassroom[] getListClassroms() {
+        return listClassroms;
+    }
 
-	public void setListClassroms(UOCClassroom[] listClassroms) {
-		this.listClassroms = listClassroms;
-	}
+    public void setListClassroms(UOCClassroom[] listClassroms) {
+        this.listClassroms = listClassroms;
+    }
 
-	public String getS_aula() {
-		return s_aula;
-	}
+    public String getS_aula() {
+        return s_aula;
+    }
 
-	public void setS_aula(String s_aula) {
-		this.s_aula = s_aula;
-	}
+    public void setS_aula(String s_aula) {
+        this.s_aula = s_aula;
+    }
 
-	public String getS_activ() {
-		return s_activ;
-	}
+    public String getS_activ() {
+        return s_activ;
+    }
 
-	public void setS_activ(String s_activ) {
-		this.s_activ = s_activ;
-	}
+    public void setS_activ(String s_activ) {
+        this.s_activ = s_activ;
+    }
 
-	public Activity[] getListActivity() {
-		return listActivity;
-	}
+    public Activity[] getListActivity() {
+        return listActivity;
+    }
 
-	public void setListActivity(Activity[] listActivity) {
-		this.listActivity = listActivity;
-	}
+    public void setListActivity(Activity[] listActivity) {
+        this.listActivity = listActivity;
+    }
 
 }

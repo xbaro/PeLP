@@ -308,11 +308,6 @@ public class UOCPelpBussinesImpl extends PelpBussinesImpl implements UOCPelpBuss
         return classroomID;
     }
 
-    
-    
-    
-    
-    
     @Override
     public DeliverSummary getUserDeliverSummary(Subject subject, int activityIndex, int deliverIndex) throws ExecPelpException, InvalidEngineException, AuthorizationException {
         throw new UnsupportedOperationException("Not supported yet.");

@@ -11,7 +11,8 @@
 	<meta name="description" content="Plataforma on-line per l’aprenentatge de llenguatges de programació" />
 	<meta name="keywords" content="" />
 	<meta name="robots" content="index, follow" /> 
-	<link rel="stylesheet" type="text/css" href="css/main.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="/pelp/css/main.css" media="all" />
+        <!--"#request.get('javax.servlet.forward.context_path')"-->
 	<s:set id="contextPath"  value="#request.get('javax.servlet.forward.context_path')" />
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>  
 	<script type="text/javascript">window.jQuery || document.write("<script type='text/javascript' src='<s:property value="contextPath"/>/js/jquery-1.7.2.min.js'>\x3C/script>")</script>
@@ -22,7 +23,6 @@
 	<script type="text/javascript" src="<s:property value="contextPath"/>/js/pelp.js"></script>
 </head>
 <body>
-
 <!-- container -->
 <div id="container">
 

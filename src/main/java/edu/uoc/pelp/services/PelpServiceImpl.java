@@ -19,121 +19,93 @@
 package edu.uoc.pelp.services;
 
 import edu.uoc.pelp.bussines.UOC.UOCPelpBussines;
-import edu.uoc.pelp.bussines.UOC.UOCPelpBussinesImpl;
-import edu.uoc.pelp.bussines.exception.InvalidEngineException;
-import edu.uoc.pelp.conf.IPelpConfiguration;
-import edu.uoc.pelp.engine.campus.ICampusConnection;
-import java.util.List;
+import edu.uoc.pelp.bussines.UOC.exception.InvalidSessionException;
+import edu.uoc.pelp.bussines.vo.Subject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.hibernate.SessionFactory;
-import uoc.edu.pelp.model.vo.ActivityData;
-import uoc.edu.pelp.model.vo.DeliverData;
-import uoc.edu.pelp.model.vo.DeliverReport;
 
-/** 
- * Services implementation. It expects that sessionFactory, campusConnection and configuration parameters are created with spring
+/**
+ * Services implementation class
  * @author Xavier Baró
  */
 public class PelpServiceImpl implements PelpService {
+    
+    private UOCPelpBussines bussines;
+    
+    /**
+     * Default constructor
+     */
+    public PelpServiceImpl(UOCPelpBussines bussines) {
+        super();
+        this.bussines=bussines;
+    }
 
-    /**
-     * Session factory
-     */
-    protected SessionFactory sessionFactory;
-    
-    /**
-     * Campus connection object
-     */
-    protected ICampusConnection campusConnection;
-    
-    /**
-     * Configuration manager
-     */
-    protected IPelpConfiguration configuration;
-    
-    /**
-     * Bussines access object
-     */
-    protected UOCPelpBussines _bussines;
-    
-    /**
-     * Default constructor. If all objects are assigned by spring, the bussines object is created
-     */
-    public PelpServiceImpl() {
-        if(sessionFactory!=null && campusConnection!=null && configuration!=null) {
+    @Override
+    public Subject[] getUserSujects(String campusSession) {
+        Subject[] ret=new Subject[2];
+        if(bussines!=null) {
             try {
-                _bussines=new UOCPelpBussinesImpl(campusConnection,sessionFactory,configuration);
-            } catch (InvalidEngineException ex) {
+                bussines.setCampusSession(campusSession);
+            } catch (InvalidSessionException ex) {
                 Logger.getLogger(PelpServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
+            ret[0]=new Subject("Semester1__BussinesOK_");
+        } else {
+            ret[0]=new Subject("Semester1__NullBussines");
         }
+        if(campusSession!=null) {
+            ret[1]=new Subject("Semester2__" + campusSession);
+        } else {
+            ret[1]=new Subject("Semester2__NullCampusSession");
+        }
+        return ret;
     }
     
-    @Override
-    public DeliverReport setDeliver(DeliverData objDeliver,
-                    ActivityData objActivity) {
+    /**
+     * Get the active subjects for current user
+     * @param campusSession Campus session
+     * @return List of subjects
+     */
+   /* @Override
+    public UOCSubject[] getUserSujects(String campusSession) {
+        UOCSubject[] retObject=new UOCSubject[3];
+        retObject[0]=new UOCSubject("20121","05.123");
+        retObject[1]=new UOCSubject("20121","05.456");
+        retObject[2]=new UOCSubject("20121","05.789");
         
+        return retObject;
+    }
+    
+    /**
+     * Add a new deliver of current user for given activity
+     * @param campusSession Campus session
+     * @param activity Activity object
+     * @param files Files to be delivered
+     * @return Result for new added deliver.
+     */
+   /* @Override
+    public DeliverDetail addDeliver(String campusSession,Activity activity, DeliverFile[] files) {
         return null;
     }
-
-    @Override
-    public List<DeliverReport> getDeliverInfo(String campusSession,
-                    Boolean incBinari, ActivityData objActivityData) {
+    
+    /**
+     * Get all the delivers of current user for given activity
+     * @param campusSession Campus session
+     * @param activity Activity object
+     * @return List of results.
+     */
+ /*   @Override
+    public DeliverDetail[] getDelivers(String campusSession,Activity activity) {
         return null;
-    }
-	
-    @Override
-    public List<DeliverReport> getDeliverInfoById(String campusSession,
-                    Boolean incBinari, int deliverId) {
-        return null;
-    }	
-	
-    @Override
-    public ActivityData[] getActivityInfo(ActivityData objActivityData,String campusSession){
-        return null;
-    }
-	
-    @Override
-    public ActivityData[] getActivityInfoById(int activityId,String campusSession){
-        return null;    
-    }
-	
-    @Override
-    public ActivityData setActivityInfo(ActivityData objActivityData,String campusSession){
-            return null;
-    }
-
+    }*/
+/*
     public UOCPelpBussines getBussines() {
-        return _bussines;
+        return bussines;
     }
 
     public void setBussines(UOCPelpBussines bussines) {
-        this._bussines = bussines;
+        this.bussines = bussines;
     }
-
-    public ICampusConnection getCampusConnection() {
-        return campusConnection;
-    }
-
-    public void setCampusConnection(ICampusConnection campusConnection) {
-        this.campusConnection = campusConnection;
-    }
-
-    public IPelpConfiguration getConfiguration() {
-        return configuration;
-    }
-
-    public void setConfiguration(IPelpConfiguration configuration) {
-        this.configuration = configuration;
-    }
-
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
-
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+    */
+    
 }
- 

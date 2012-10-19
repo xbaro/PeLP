@@ -16,7 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-package edu.uoc.pelp.bussines.UOC.vo;
+package edu.uoc.pelp.services.vo;
 
 import edu.uoc.pelp.bussines.vo.Subject;
 
@@ -24,17 +24,17 @@ import edu.uoc.pelp.bussines.vo.Subject;
  * Subject information for UOC subjects
  * @author Xavier Baró
  */
-public class UOCSubject extends Subject {
+public class SubjectDetail extends Subject {
         
-    public UOCSubject(String semester, String subject) {
+    public SubjectDetail(String semester, String subject) {
         super(getStrSubjectID(semester,subject));
     }
     
-    public UOCSubject(Subject parentObject) {
+    public SubjectDetail(Subject parentObject) {
         super(parentObject);
     }
     
-    public UOCSubject() {
+    public SubjectDetail() {
         super();
     }
 
@@ -113,7 +113,7 @@ public class UOCSubject extends Subject {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final UOCSubject other = (UOCSubject) obj;
+        final SubjectDetail other = (SubjectDetail) obj;
         if ((this.getSubjectCode() == null) ? (other.getSubjectCode() != null) : !this.getSubjectCode().equals(other.getSubjectCode())) {
             return false;
         }

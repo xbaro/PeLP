@@ -40,6 +40,13 @@ public class Subject {
     protected String _description;
     
     /**
+     * Default constructor
+     */
+    public Subject() {
+        
+    }
+    
+    /**
      * Default constructor with identifier
      * @param subjectID Subject identifier
      */
