@@ -19,9 +19,9 @@
 package edu.uoc.pelp.bussines;
 
 import edu.uoc.pelp.bussines.exception.*;
+import edu.uoc.pelp.bussines.vo.*;
 import edu.uoc.pelp.bussines.vo.Classroom;
 import edu.uoc.pelp.bussines.vo.Subject;
-import edu.uoc.pelp.bussines.vo.*;
 import edu.uoc.pelp.conf.IPelpConfiguration;
 import edu.uoc.pelp.engine.DAOPELPEngine;
 import edu.uoc.pelp.engine.IPELPEngine;
@@ -352,6 +352,21 @@ public abstract class PelpBussinesImpl implements PelpBussines {
         }
         
         return retVal;
+    }
+    
+    @Override
+    public boolean isUserAuthenticated() {
+        boolean retValue;
+        if(_campusConnection==null) {
+            return false;
+        }
+        try {
+            retValue=_campusConnection.isUserAuthenticated();
+        } catch (AuthPelpException ex) {
+            retValue=false;
+        }
+        
+        return retValue;
     }
     
     @Override

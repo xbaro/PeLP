@@ -4,7 +4,37 @@
         <description>Administration services for PELP</description>
         <parameter name="ServiceObjectSupplier" locked="false">org.apache.axis2.extensions.spring.receivers.SpringServletContextObjectSupplier</parameter>
         <parameter name="SpringBeanName" locked="false">adminService</parameter>        
-        <operation name="hello">
+        <operation name="addAdministrator">
+            <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+        </operation>
+        <operation name="deleteAdministrator">
+            <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+        </operation>
+        <operation name="getActiveSubjects">
+            <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+        </operation>
+        <operation name="addActiveSubject">
+            <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+        </operation>
+        <operation name="removeActiveSubject">
+            <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+        </operation>
+        <operation name="setActiveSubject">
+            <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+        </operation>
+        <operation name="getActiveSemesters">
+            <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+        </operation>
+        <operation name="addLanguage">
+            <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+        </operation>
+        <operation name="removeLanguage">
+            <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+        </operation>
+        <operation name="getLanguages">
+            <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+        </operation>
+        <operation name="setLanguage">
             <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
         </operation>
     </service>

@@ -73,11 +73,15 @@ public class UOCPelpBussinesImpl extends PelpBussinesImpl implements UOCPelpBuss
             _engine=null;
             throw new InvalidSessionException("Null campus session"); 
         }
-        if(_campusSession==null || _campusConnection==null || !_campusSession.equals(_campusSession)) {
+        if(_campusSession==null || _campusConnection==null || !_campusSession.equals(session)) {
             // Store new campus session
             _campusSession=session;
             try {
-                setCampusConnection(new CampusConnection(session));
+                if(_campusConnection instanceof CampusConnection) {
+                    ((CampusConnection)_campusConnection).setCampusSession(_campusSession);
+                } else {
+                    setCampusConnection(new CampusConnection(session));
+                }
             } catch (InvalidCampusConnectionException ex) {
                 throw new InvalidSessionException("Invalid campus connection exception when used given session connection."); 
             }

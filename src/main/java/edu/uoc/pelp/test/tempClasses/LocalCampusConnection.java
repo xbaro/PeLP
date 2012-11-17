@@ -77,8 +77,20 @@ public class LocalCampusConnection implements ICampusConnection{
      */
     private Person[] _testAccessPersons=null;
     
+    /**
+     * Default constructor for unauthenticated user
+     */
     public LocalCampusConnection() {
         createDummyData();
+    }
+    
+    /**
+     * Default constructor for authenticated user
+     * @param profile User Profile to be used
+     */
+    public LocalCampusConnection(String profile) {
+        createDummyData();
+        setProfile(profile);
     }
         
     @Override
@@ -888,7 +900,7 @@ public class LocalCampusConnection implements ICampusConnection{
         return null;
     }
     
-    public void setProfile(String profileID) {
+    public final void setProfile(String profileID) {
         // Each time that the profile changes, test data is generated
         createDummyData();
         

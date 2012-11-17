@@ -18,19 +18,48 @@
 */
 package edu.uoc.pelp.services;
 
-import edu.uoc.pelp.bussines.vo.Subject;
+import edu.uoc.pelp.bussines.vo.Activity;
+import edu.uoc.pelp.bussines.vo.DeliverDetail;
+import edu.uoc.pelp.bussines.vo.UserInformation;
+import edu.uoc.pelp.services.vo.SubjectData;
 
 /**
- * Services interface class
+ * PeLP Services interface class
  * @author Xavier Baró
  */
 public interface PelpService {
+    /**
+     * Get the information for current user
+     * @param campusSession Campus session
+     * @return User information object
+     */
+    
+    public UserInformation getUserInformation(String campusSession);
+    
     /**
      * Get the active subjects for current user
      * @param campusSession Campus session
      * @return List of subjects
      */
-    public Subject[] getUserSujects(String campusSession);
+    public SubjectData[] getUserSujects(String campusSession);
+    
+    /**
+     * Get the actvities for a certain subject
+     * @param campusSession Campus session
+     * @param subjectID Subject identifier
+     * @return 
+     */
+    public Activity[] getSubjectActivities(String campusSession,String subjectID);
+    
+    /**
+     * Compile given code and pass the given tests.
+     * @param campusSession Campus session (can be null if user is not authenticated)
+     * @param code Code to be processed
+     * @param progLanguage Identifier for programming language
+     * @param tests Array of tests to be passed by the code (optional)
+     * @return Object with all the results from this process
+     */
+    //public DeliverReport compileCode(String campusSession,String code,String progLanguage,Test[] tests);
     
     /**
      * Add a new deliver of current user for given activity
@@ -39,7 +68,7 @@ public interface PelpService {
      * @param files Files to be delivered
      * @return Result for new added deliver.
      */
-   // public DeliverDetail addDeliver(String campusSession,Activity activity, DeliverFile[] files);
+    //public DeliverDetail addDeliver(String campusSession,Activity activity, DeliverFile[] files);
     
     /**
      * Get all the delivers of current user for given activity
@@ -47,5 +76,5 @@ public interface PelpService {
      * @param activity Activity object
      * @return List of results.
      */
-   // public DeliverDetail[] getDelivers(String campusSession,Activity activity);
+    public DeliverDetail[] getDelivers(String campusSession,Activity activity);
 }

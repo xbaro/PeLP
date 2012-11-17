@@ -2,79 +2,102 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:tx="http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
-
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-          http://www.springframework.org/schema/tx/spring-tx-2.5.xsd http://www.springframework.org/schema/tx/spring-tx-2.5.xsd/spring-spring-tx-2.5.xsd-3.1.2.RELEASE.xsd          
-">
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                           http://www.springframework.org/schema/tx/spring-tx-2.5.xsd 
+                           http://www.springframework.org/schema/tx/spring-tx-2.5.xsd/spring-spring-tx-2.5.xsd-3.1.2.RELEASE.xsd   
+                           http://www.springframework.org/schema/util
+                           http://www.springframework.org/schema/util/spring-util-2.5.xsd">       
         
-        <!--========== Spring Data Source ==========-->
-        <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-                <property name="driverClassName">
-                        <value>${hibernate.connection.driver_class}</value>
-                </property>
-                <property name="url">
-                        <value>${hibernate.connection.url}</value>
-                </property>
-                <property name="username">
-                        <value>${hibernate.connection.username}</value>
-                </property>
-                <property name="password">
-                        <value>${hibernate.connection.password}</value>
-                </property>
-        </bean>
-        <!--========== /Spring Data Source ==========-->
+    <!--========== Spring Data Source ==========-->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName">
+            <value>${hibernate.connection.driver_class}</value>
+        </property>
+        <property name="url">
+            <value>${hibernate.connection.url}</value>
+        </property>
+        <property name="username">
+            <value>${hibernate.connection.username}</value>
+        </property>
+        <property name="password">
+            <value>${hibernate.connection.password}</value>
+        </property>
+    </bean>
+    <!--========== /Spring Data Source ==========-->
+    
+    <!--========== UOC Api Properties ==========-->
+    <util:properties id="propertiesUOCApi" location="classpath:UOCApi.properties"/>
+    <!--========== /UOC Api Properties ==========-->
         
-        <!--========== Hibernate SessionFactory ==========-->
-        <!--<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">  -->
-        <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">  
-            <property name="configLocation" value="classpath:hibernate.cfg.xml"/>  
-            <property name="packagesToScan">
-                <list>
-                    <value>edu.uoc.pelp.model.vo</value>
-                    <value>edu.uoc.pelp.model.vo.UOC</value>
-                </list>
-            </property>
-        </bean>        
-        <!--========== /Hibernate SessionFactory ==========-->
+    <!--========== Hibernate SessionFactory ==========-->
+    <!--<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">  -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">  
+        <property name="configLocation" value="classpath:hibernate.cfg.xml"/>  
+        <property name="packagesToScan">
+            <list>
+                <value>edu.uoc.pelp.model.vo</value>
+                <value>edu.uoc.pelp.model.vo.UOC</value>
+                <value>edu.uoc.pelp.model.vo.admin</value>
+            </list>
+        </property>
+    </bean>        
+    <!--========== /Hibernate SessionFactory ==========-->
         
-         <!--========== TransactionManager ==========-->        
-        <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-                <property name="sessionFactory">
-                        <ref local="sessionFactory" />
-                </property>
-        </bean>
-        <!--========== /TransactionManager ==========-->
+    <!--========== TransactionManager ==========-->        
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory">
+            <ref local="sessionFactory" />
+        </property>
+    </bean>
+    <!--========== /TransactionManager ==========-->
         
-        <!--========== Hibernate Template ==========-->
-        <bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
-                <property name="sessionFactory">
-                        <ref bean="sessionFactory" />
-                </property>
-        </bean>
-        <!--========== /Hibernate Template ==========-->
+    <!--========== Hibernate Template ==========-->
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory" />
+        </property>
+    </bean>
+    <!--========== /Hibernate Template ==========-->
         
-        <!--========== Bussines Object ==========-->
-        <bean id="campusConnection" class="edu.uoc.pelp.engine.campus.UOC.CampusConnection"/>
-        <bean id="configObject" class="edu.uoc.pelp.test.tempClasses.PCPelpConfiguration"/>    
-        <bean id="pelpBussines" class="edu.uoc.pelp.bussines.UOC.UOCPelpBussinesImpl">
-            <constructor-arg ref ="campusConnection"/>
-            <constructor-arg ref ="sessionFactory"/>    
-            <constructor-arg ref ="configObject"/>
-        </bean>
-        <!--========== /Bussines Object ==========-->
+    <!--========== Bussines Object ==========-->
+    <bean id="campusConnection" class="edu.uoc.pelp.engine.campus.UOC.CampusConnection">
+        <property name="credentials" ref="propertiesUOCApi"/>
+    </bean>
+    <bean id="configObject" class="edu.uoc.pelp.test.tempClasses.PCPelpConfiguration"/>    
+    <bean id="pelpBussines" class="edu.uoc.pelp.bussines.UOC.UOCPelpBussinesImpl">
+        <constructor-arg ref ="campusConnection"/>
+        <constructor-arg ref ="sessionFactory"/>    
+        <constructor-arg ref ="configObject"/>
+    </bean>
+    <!--========== /Bussines Object ==========-->
         
-        <!--========== Services Object ==========-->
-        <bean id="pelpService" class="edu.uoc.pelp.services.PelpServiceImpl">  
-            <constructor-arg ref ="pelpBussines"/>
-            <!--<constructor-arg value="TEST STRING"/>-->
-        </bean>
-        <bean id="adminService" class="edu.uoc.pelp.services.AdminServiceImpl">
-        </bean>
-        <!--========== /Services Object ==========-->
+    <!--========== Services Object ==========-->
+    <bean id="pelpService" class="edu.uoc.pelp.services.PelpServiceImpl">  
+        <constructor-arg ref ="pelpBussines"/>
+    </bean>
+    <bean id="adminService" class="edu.uoc.pelp.services.AdminServiceImpl">
+        <constructor-arg ref ="pelpBussines"/>
+    </bean>
+    <!--========== /Services Object ==========-->
         
-        <!--========== Actions ==========-->
-        <bean id="teacherSpringAction" class="edu.uoc.pelp.actions.TeacherAction">
-            <property name="bussines" ref="pelpBussines" />
-	</bean>
-        <!--========== /Actions ==========-->
+    <!--========== Filters ==========-->
+    <bean id="loginFilterBean" class="edu.uoc.pelp.servlets.UOC.LoginFilter">
+        <property name="bussines" ref="pelpBussines" />
+        <property name="credentials" ref="propertiesUOCApi"/>
+    </bean>
+    <!--========== /Filters ==========-->
+        
+    <!--========== Actions ==========-->
+    <bean id="adminSpringAction" class="edu.uoc.pelp.actions.AdminAction">
+        <property name="bussines" ref="pelpBussines" />
+    </bean>
+    <bean id="teacherSpringAction" class="edu.uoc.pelp.actions.TeacherAction">
+        <property name="bussines" ref="pelpBussines" />
+    </bean>
+    <!--========== /Actions ==========-->
+        
+    <!-- So classes/functions with @Transactional get a hibernate txn -->
+    <!--<tx:annotation-driven />-->
 </beans>

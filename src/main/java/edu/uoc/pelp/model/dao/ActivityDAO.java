@@ -115,7 +115,8 @@ public class ActivityDAO implements IActivityDAO {
         if(key==null) {
             return null;
         }
-                
+          
+        
         // Get the descriptions
         Query q=getSession().getNamedQuery("ActivityDesc.findByActivity");
         q.setParameter("semester", key.getSemester());
@@ -124,7 +125,7 @@ public class ActivityDAO implements IActivityDAO {
 
         // Get the list of descriptions
         List<ActivityDesc> list=q.list();
-        
+        getSession().beginTransaction().commit();
         return list;
     }
     
@@ -526,8 +527,9 @@ public class ActivityDAO implements IActivityDAO {
         
         // Get the key
         SubjectPK key=ObjectFactory.getSubjectPK(subject);
-        
+  
         // Get the activity register
+        //getSession().beginTransaction();
         Query query=getSession().getNamedQuery("Activity.findAllBySubject");
         query.setParameter("semester", key.getSemester());
         query.setParameter("subject", key.getSubject());
@@ -755,6 +757,10 @@ public class ActivityDAO implements IActivityDAO {
         
         // Return last id
         return lastID;
+    }
+    protected void finalize() throws Throwable {
+        getSession().close();
+    	super.finalize();
     }
 }
 

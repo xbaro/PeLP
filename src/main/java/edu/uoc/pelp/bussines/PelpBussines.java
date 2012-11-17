@@ -86,6 +86,12 @@ public interface PelpBussines {
     public DeliverDetail compileCode(DeliverFile[] codeFiles,String programmingLanguage, Test[] tests, String rootPath) throws ExecPelpException,InvalidEngineException;
     
     /**
+     * Check if user is authenticated
+     * @return True if is authenticated of False otherwise
+     */
+    public boolean isUserAuthenticated();
+    
+    /**
      * Get the current user information or null if it is not logged in
      * @return User information or null if no user is authenticated
      * @throws AuthorizationException if an error occurs accessing authentication information

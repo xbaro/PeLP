@@ -104,6 +104,22 @@ public class UOCSubject extends Subject {
         }
         return semester + "__" + subject;
     }
+    
+    public Subject getSubject() {
+        Subject ret=new Subject();
+        
+        ret.setSubjectID(_subjectID);
+        ret.setShortName(_shortName);
+        ret.setDescription(_description);
+        
+        return ret;
+    }
+    
+    public void setSubject(Subject subject) {
+        _subjectID=subject.getSubjectID();
+        _shortName=subject.getShortName();
+        _description=subject.getDescription();
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -129,6 +145,11 @@ public class UOCSubject extends Subject {
         hash = 71 * hash + (this.getSubjectCode() != null ? this.getSubjectCode().hashCode() : 0);
         hash = 71 * hash + (this.getSemesterCode() != null ? this.getSemesterCode().hashCode() : 0);
         return hash;
+    }
+
+    @Override
+    public String toString() {
+        return "[" + getSemesterCode() + "] " + this.getSubjectCode();
     }
     
     

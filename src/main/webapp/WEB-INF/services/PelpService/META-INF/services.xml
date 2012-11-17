@@ -3,15 +3,18 @@
     <service name="PelpService">
         <description>Generic services for PELP</description>
         <parameter name="ServiceObjectSupplier" locked="false">org.apache.axis2.extensions.spring.receivers.SpringServletContextObjectSupplier</parameter>
-        <parameter name="SpringBeanName" locked="false">pelpService</parameter>        
+        <parameter name="SpringBeanName" locked="false">pelpService</parameter> 
+        <operation name="getUserInformation">
+            <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+        </operation>
         <operation name="getUserSujects">
             <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
         </operation>
-        <!--<operation name="addDeliver">
+        <operation name="getSubjectActivities">
             <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
         </operation>
         <operation name="getDelivers">
             <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
-        </operation>-->
+        </operation>
     </service>
 </serviceGroup>
