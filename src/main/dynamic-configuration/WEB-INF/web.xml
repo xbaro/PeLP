@@ -19,7 +19,22 @@
         <filter-name>loginFilterBean</filter-name>
         <url-pattern>/home.html</url-pattern>        
     </filter-mapping>
-    
+
+    <filter-mapping>
+        <filter-name>loginFilterBean</filter-name>
+        <url-pattern>/admin.html</url-pattern>        
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>loginFilterBean</filter-name>
+        <url-pattern>/admin-subjects.html</url-pattern>        
+    </filter-mapping>
+            
+    <filter-mapping>
+        <filter-name>loginFilterBean</filter-name>
+        <url-pattern>/admin-activities.html</url-pattern>        
+    </filter-mapping>
+                
 	<filter>
 		<filter-name>Spring OpenSessionInViewFilter</filter-name>
 		<filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>

@@ -74,6 +74,14 @@ http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
 		<property name="bUOC" ref="bUOC" />
 	</bean>
 
+	<bean id="adminSemesterSpringAction" class="edu.uoc.pelp.actions.AdminAction" scope="request">
+		<property name="bUOC" ref="bUOC" />
+	</bean>
+
+	<bean id="adminSubjectsSpringAction" class="edu.uoc.pelp.actions.AdminSubjectsAction" scope="request">
+		<property name="bUOC" ref="bUOC" />
+	</bean>
+		
 	<!-- post-processors for all standard config annotations -->
 	<bean
 		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />

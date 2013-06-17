@@ -135,10 +135,14 @@ public class AdministrationDAO implements IAdministrationDAO {
         }
         
         // Get the admin register
+        getSession().beginTransaction();
         Query query=getSession().getNamedQuery("PelpAdmins.findByUser");
         query.setParameter("userName", person.getUsername());
                 
         List<PelpAdmins> newObj=query.list();
+        
+        getSession().close();
+        
         if(newObj==null || newObj.size()!=1) {
             return null;
         }
