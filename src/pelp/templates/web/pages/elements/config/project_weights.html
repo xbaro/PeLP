@@ -1,0 +1,29 @@
+{% load i18n %}
+{% load static %}
+<div class="col">
+    <p class="text-muted text-justify">
+        {% blocktranslate trimmed %}
+        Assign a weight to each of the tests and/or test groups.
+        {% endblocktranslate %}
+    </p>
+    <p class="text-muted">
+        <strong>{% trans "Total score" %}:</strong> <span id="project_total_weight"></span>
+    </p>
+
+</div>
+<div class="table-responsive">
+    <table id="tests" class="table table-striped table-bordered" style="width:100%"
+           data-server-side="true"
+           data-ajax="/api/course/{{ activity.course.id }}/activity/{{ activity.id }}/test/?format=datatables"
+           data-language-url="{% static 'datatables/'|add:LANGUAGE_CODE|add:'.json' %}"
+    >
+        <thead>
+        <tr>
+            <th data-data="id">{% trans "Id" %}</th>
+            <th data-data="code">{% trans "Name" %}</th>
+            <th data-data="weight">{% trans "Weight" %}</th>
+            <th data-data="parent">{% trans "Section" %}</th>
+        </tr>
+        </thead>
+    </table>
+</div>

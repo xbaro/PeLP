@@ -1,0 +1,31 @@
+<div class="col-md-6 col-xl-4">
+    <div class="card">
+        <div class="card-body px-3 py-4 position-relative">
+            <a class="stretched-link d-flex align-items-center text-reset"
+               href="/course/{{ course.id }}/activity/{{ activity.id }}/">
+                <div class="row">
+                    <div class="col-2">
+                        <svg class="svg-icon svg-icon-lg svg-icon-heavy me-xl-2">
+                            {% if activity.is_active %}
+                                <use xlink:href="#lock-opened-1639"></use>
+                            {% else %}
+                                <use xlink:href="#lock-1638"></use>
+                            {% endif %}
+                        </svg>
+                    </div>
+                    <div class="col-10">
+                        <div class="ms-3 overflow-hidden">
+                            <h5 class="card-text mb-0">{{ activity.code }}</h5>
+                            <p class="card-text text-uppercase text-muted text-sm">{{ activity.name }}</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% if activity.project.error %}
+            <div class="card-footer bg-white">
+                <div class="text-muted">{{ activity.project.error }}</div>
+            </div>
+        {% endif %}
+    </div>
+</div>

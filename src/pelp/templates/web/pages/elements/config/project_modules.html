@@ -1,0 +1,38 @@
+{% load i18n %}
+{% load widget_tweaks %}
+<div class="col">
+    <p class="text-muted text-justify">
+        {% blocktranslate trimmed %}
+        Define additional modules of the project.
+        {% endblocktranslate %}
+    </p>
+</div>
+<div class="row" data-masonry="{&quot;percentPosition&quot;: true }">
+    {% for module in activity.project.projectmodule_set.all %}
+        {% include "web/pages/elements/module-card.html" with activity=activity module=module %}
+    {% endfor %}
+    <div class="col-md-3 col-xl-2">
+        <div class="card">
+            <div class="card-body px-3 py-4">
+                <a class="stretched-link d-flex align-items-center text-reset module-add" href="#">
+                    <svg class="svg-icon svg-icon-lg svg-icon-heavy me-xl-2">
+                        <use xlink:href="#add-layer-7099"></use>
+                        <title>{% trans "Add new module" %}</title>
+                    </svg>
+                    <div class="ms-3 overflow-hidden">
+                        <h5 class="card-text mb-0">{% trans "New module" %}</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'web/pages/elements/config/project_module_form.html' %}
+<div class="col-12 text-center">
+    <a class="save-changes persistence-button btn btn-success mb-3 mr-1 disabled" role="button" id="btn_save_project_module">
+        <i class="fa fa-save"></i> {% trans "Save changes" %}
+    </a>
+    <a class="persistence-button btn btn-light mb-3 mr-1" role="button" id="btn_cancel_project_module">
+        {% trans "Cancel" %}
+    </a>
+</div>

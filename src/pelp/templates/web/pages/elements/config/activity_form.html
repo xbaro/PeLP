@@ -1,0 +1,131 @@
+{% load i18n %}
+{% load widget_tweaks %}
+{% load web_utils %}
+<form method="post" id="form_activity" data-activity_id="{{ activity.id }}">
+    {% csrf_token %}
+    {% for hidden in form_activity.hidden_fields %}
+        {{ hidden }}
+    {% endfor %}
+    <input type="hidden" name="id" id="id" value="{% if activity %}{{ activity.id }}{% else %}-1{% endif %}">
+    <div class="row">
+        <div class="col-12">
+            <div class="row mb-3">
+                <div class="col-auto">
+                    <div class="form-check form-switch">
+                        <label class="form-label form-check-label" for="{{ form_activity.enabled.id_for_label }}">{% trans "Enabled" %}</label>
+                        {{ form_activity.enabled|add_class:"form-check-input" }}
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="form-check form-switch">
+                        <label class="form-label form-check-label" for="{{ form_activity.self_evaluation.id_for_label }}">{% trans "Self Evaluation" %}</label>
+                        {{ form_activity.self_evaluation|add_class:"form-check-input" }}
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <label class="form-label" for="{{ form_activity.historic_code.id_for_label }}">{% trans "Historic code" %}</label>
+                    {{ form_activity.historic_code|add_class:"form-select" }}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-auto">
+                    <div class="form-check form-switch">
+                        <label class="form-label form-check-label" for="{{ form_activity.include_report.id_for_label }}">{% trans "Include Report" %}</label>
+                        {{ form_activity.include_report|add_class:"form-check-input" }}
+                    </div>
+                </div>
+                <div class="col">
+                    <label class="form-label" for="{{ form_activity.report_name.id_for_label }}">{% trans "Report Name" %}</label>
+                    {{ form_activity.report_name|add_class:"form-control" }}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label class="form-label" for="{{ form_activity.code.id_for_label }}">{% trans "Code" %}</label>
+                    {{ form_activity.code|add_class:"form-control" }}
+                </div>
+                <div class="col-auto">
+                    <label class="form-label" for="{{ form_activity.rubric.id_for_label }}">{% trans "Rubric" %}</label>
+                    {{ form_activity.rubric|add_class:"form-select" }}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label class="form-label" for="{{ form_activity.start.id_for_label }}">{% trans "Start" %}</label>
+                    {{ form_activity.start|add_class:"form-control" }}
+                </div>
+                <div class="col">
+                    <label class="form-label" for="{{ form_activity.end.id_for_label }}">{% trans "End" %}</label>
+                    {{ form_activity.end|add_class:"form-control" }}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label class="form-label" for="{{ form_activity.max_submissions.id_for_label }}">{% trans "Maximum Submissions" %}</label>
+                    {{ form_activity.max_submissions|add_class:"form-control" }}
+                </div>
+                <div class="col">
+                    <label class="form-label" for="{{ form_activity.max_submissions_day.id_for_label }}">{% trans "Maximum Submissions per day" %}</label>
+                    {{ form_activity.max_submissions_day|add_class:"form-control" }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <button class="nav-link active" id="nav-{{ form_activity.default_language|list_pos:0 }}-tab" data-bs-toggle="tab"
+                            data-bs-target="#nav-{{ form_activity.default_language|list_pos:0 }}" type="button" role="tab"
+                            aria-controls="nav-{{ form_activity.default_language|list_pos:0 }}" aria-selected="true">
+                        <strong>{{ form_activity.default_language|list_pos:1 }}*</strong>
+                    </button>
+                    {% for lang in form_activity.additional_languages %}
+                    <button class="nav-link" id="nav-{{ lang|list_pos:0 }}-tab" data-bs-toggle="tab"
+                            data-bs-target="#nav-{{ lang|list_pos:0 }}" type="button" role="tab"
+                            aria-controls="nav-{{ lang|list_pos:0 }}" aria-selected="false">
+                        <strong>{{ lang|list_pos:1 }}</strong>
+                    </button>
+                    {% endfor %}
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent" style="min-height: 50px;">
+                <div class="tab-pane fade show active" id="nav-{{ form_activity.default_language|list_pos:0 }}" role="tabpanel"
+                     aria-labelledby="nav-{{ form_activity.default_language|list_pos:0 }}-tab">
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <br class="col">
+                            <label class="form-label" for="{{ form_activity.name.id_for_label }}">{% trans "Name" %}</label>
+                            {{ form_activity.name|add_class:"form-control" }}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label"
+                               for="{{ form_activity.description.id_for_label }}">{% trans "Description" %}</label><br>
+                        {{ form_activity.description|add_class:"form-control" }}
+                    </div>
+                </div>
+                {% for lang in form_activity.additional_languages %}
+                    <div class="tab-pane fade" id="nav-{{ lang|list_pos:0 }}" role="tabpanel"
+                    aria-labelledby="nav-{{ lang|list_pos:0 }}-tab">
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <br class="col">
+                                <label class="form-label" for="{{ form_activity|lang_form_name_element_id:lang }}">{% trans "Name" %}</label>
+                                {{ form_activity|lang_form_name_element:lang|add_class:"form-control" }}
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label"
+                                   for="{{ form_activity|lang_form_description_element_id:lang }}">{% trans "Description" %}</label><br>
+                            {{ form_activity|lang_form_description_element:lang|add_class:"form-control" }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</form>
+<div class="col-12 text-center">
+    <a class="save-changes persistence-button btn btn-success mb-3 mr-1 disabled" role="button" id="btn_save_activity">
+        <i class="fa fa-save"></i> {% trans "Save changes" %}
+    </a>
+</div>

@@ -1,0 +1,53 @@
+{% load i18n %}
+{% load widget_tweaks %}
+<form method="post" id="form_project_module">
+    {% csrf_token %}
+    {% for hidden in form_project_module.hidden_fields %}
+        {{ hidden }}
+    {% endfor %}
+    <input type="hidden" name="id" id="id">
+    <div class="row">
+        <div class="col-12">
+            <div class="row mb-3">
+                <div class="col-auto">
+                    <label class="form-label" for="{{ form_project_module.type.id_for_label }}">{% trans "Type" %}</label>
+                    {{ form_project_module.type|add_class:"form-select"|attr:"aria-describedby:m_typeHelper" }}
+                    <div id="m_typeHelper" class="form-text">{% trans "Select the type of module" %}</div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-auto">
+                    <label class="form-label" for="{{ form_project_module.name.id_for_label }}">{% trans "Name" %}</label>
+                    {{ form_project_module.name|add_class:"form-control"|attr:"aria-describedby:nameHelper" }}
+                    <div id="nameHelper" class="form-text">{% trans "Name of the module" %}</div>
+                </div>
+                <div class="col-auto">
+                    <label class="form-label" for="{{ form_project_module.base_path.id_for_label }}">{% trans "Base Path" %}</label>
+                    {{ form_project_module.base_path|add_class:"form-control"|attr:"aria-describedby:base_pathHelper" }}
+                    <div id="pase_pathHelper" class="form-text">{% trans "Base path of this module in the source tree." %}</div>
+                </div>
+                <div class="col-auto">
+                    <label class="form-label" for="{{ form_project_module.allowed_files_regex.id_for_label }}">{% trans "Allowed files" %}</label>
+                    <div class="row mb-1">
+                        <div class="col-auto ms-3">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="acceptedFilesOpt" id="acceptedFilesOpt_c_h" value="files_c_h" checked>
+                                <label class="form-check-label" for="m_acceptedFilesOpt_c_h"><pre>*.h, *.c</pre></label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="acceptedFilesOpt" id="acceptedFilesOpt_c_h_readme" value="files_c_h_readme">
+                                <label class="form-check-label" for="acceptedFilesOpt_c_h_readme"><pre>*.h, *.c, README.txt</pre></label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="acceptedFilesOpt" id="acceptedFilesOpt_custom" value="custom">
+                                <label class="form-check-label" for="acceptedFilesOpt_custom"><pre>{% trans "Custom" %}</pre></label>
+                            </div>
+                        </div>
+                    </div>
+                    {{ form_project_module.allowed_files_regex|add_class:"form-control"|attr:"aria-describedby:allowed_files_regexHelper" }}
+                    <div id="allowed_files_regexHelper" class="form-text">{% trans "Regular expression for files allowed in submissions." %}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

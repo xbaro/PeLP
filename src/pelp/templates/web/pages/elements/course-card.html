@@ -1,0 +1,20 @@
+{% load web_utils %}
+{% load i18n %}
+
+{% get_current_language as LANGUAGE_CODE %}
+<div class="col-md-6 col-xl-4">
+    <div class="card">
+        <div class="card-body px-3 py-4 active-course-card">
+            <a class="stretched-link d-flex align-items-center text-reset"
+               href="/course/{{ course.id }}/">
+                <svg class="svg-icon svg-icon-lg svg-icon-heavy me-xl-2">
+                    <use xlink:href="#literature-3495"><title>{% trans "Course" %}</title></use>
+                </svg>
+                <div class="ms-3 overflow-hidden">
+                    <h5 class="card-text mb-0">{{ course.code }}</h5>
+                    <p class="card-text text-uppercase text-muted text-sm">{{ course|trans_name:LANGUAGE_CODE }}</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

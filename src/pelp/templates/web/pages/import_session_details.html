@@ -1,0 +1,85 @@
+{% extends 'web/base.html' %}
+{% load static %}
+
+{% block page_extra_css %}
+    <!-- Simple DataTables CSS-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
+{% endblock %}
+
+{% block page_head_scripts %}
+{% endblock %}
+
+{% block content %}
+    <section class="activity main-container">
+        <div class="container-fluid">
+            <div class="row-cols-1">
+                <div class="col-lg-auto">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="h4 mb-0">
+                                [{{ session.get_status_display }}] Session {{ session.id }} for {{ session.get_type_display }}
+                                {% if session.status == 2 and session.valid == False %}
+                                <a id="upload-button" role="button" style="visibility: hidden;float: right;">
+                                    <svg class="svg-icon svg-icon-lg svg-icon-heavy me-xl-2">
+                                        <use xlink:href="#upload-1691"></use>
+                                    </svg>
+                                </a>
+                                {% endif %}
+                            </h3>
+                            {% if session.status == 2 and session.valid == False %}
+                            <div class="card-close">
+                                <div class="dropdown">
+                                  <button class="dropdown-toggle text-sm" type="button" id="closeCard1" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>
+                                  <div class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="closeCard1">
+                                      <a class="dropdown-item py-1 px-3 edit" href="#">
+                                          <i class="fas fa-cog"></i><span id="edit-text">Edit</span>
+                                      </a>
+                                  </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="entries" class="table table-striped table-bordered" style="width:100%"
+                                       data-server-side="true" data-ajax="/api/import_session/{{ session.id }}/entry/?format=datatables">
+                                    <thead>
+                                    <tr>
+                                        <th data-data="id">Id</th>
+                                        <th data-data="learner">Learner</th>
+                                        <th data-data="entry_file">File</th>
+                                        <th data-data="data">Data</th>
+                                        <th data-data="is_valid">Validated</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" data-masonry="{&quot;percentPosition&quot;: true }">
+                {% for module in activity.project.projectmodule_set.all %}
+                    {% include "web/pages/elements/module-card.html" with activity=activity module=module %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block page_body_scripts %}
+    <!-- JQuery -->
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
+    {% csrf_token %}
+    <input type="hidden" name="import_session_type" value="{{ session.type }}">
+    <script src="{% static 'js/pages/import_sessions-detail.js' %}"></script>
+{% endblock %}

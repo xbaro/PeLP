@@ -1,0 +1,35 @@
+{% load i18n %}
+{% load web_utils %}
+
+<div class="mt-5 activity-feedback text-muted">
+    <div class="feedback-header">
+        <h4>{% trans "Evaluation" %}</h4>
+    </div>
+    <div class="feedback-body">
+        <div class="d-flex align-items-center float-end ms-3 feedback-score">
+            <span class="score">
+                {{ activity_feedback.score }}
+            </span>
+        </div>
+        {% get_current_language as LANGUAGE_CODE %}
+        {% if activity_feedback_elements.count > 0 %}
+            <div class="feedback-title mt-3 ms-3"><h5>{% trans "General Aspects" %}</h5></div>
+            <div class="feedback-block ms-3">
+            {% for element in activity_feedback_elements %}
+                <strong>{{ element.rubric_element|trans_description:LANGUAGE_CODE }}</strong>
+                <ul>
+                    <li>{{ element.value|trans_description:LANGUAGE_CODE }}</li>
+                </ul>
+            {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if activity_feedback.general %}
+            <div class="feedback-title mt-3 ms-3"><h5>{% trans "Observations" %}</h5></div>
+            <div class="feedback-block ms-3 text-justify">
+                {{ activity_feedback.general|safe }}
+            </div>
+        {% endif %}
+    </div>
+</div>
+

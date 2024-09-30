@@ -1,0 +1,9 @@
+pytest
+pytest-cov
+pytest-dependency
+pytest-django
+
+pylint
+pylint-django
+# prospector[with_bandit]
+anybadge

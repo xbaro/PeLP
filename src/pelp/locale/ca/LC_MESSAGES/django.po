@@ -1,0 +1,926 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-02-24 22:13+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\apps\api\serializers.py:323 .\apps\api\serializers.py:350
+#: .\templates\web\pages\elements\learner_feedback_info.html:16
+msgid "General Aspects"
+msgstr "Aspectes Generals"
+
+#: .\apps\api\serializers.py:328 .\apps\api\serializers.py:354
+#: .\templates\web\pages\elements\learner_feedback_info.html:28
+msgid "Observations"
+msgstr "Observacions"
+
+#: .\apps\web\forms\faq.py:127 .\apps\web\forms\faq.py:130
+msgid "This field is required"
+msgstr "Aquest camp és requerit"
+
+#: .\apps\web\forms\feedback.py:106
+msgid "Select an option"
+msgstr "Tria una opció"
+
+#: .\apps\web\templatetags\web_utils.py:77
+msgid "Administrator"
+msgstr "Administrador"
+
+#: .\apps\web\templatetags\web_utils.py:83
+msgid "Instructor"
+msgstr "Professor"
+
+#: .\apps\web\templatetags\web_utils.py:85
+#: .\templates\web\pages\submissions.html:71
+msgid "Learner"
+msgstr "Estudiant"
+
+#: .\apps\web\views.py:64 .\templates\web\base.html:76
+#: .\templates\web\sidebar.html:32 .\templates\web\sidebar.html:34
+msgid "Dashboard"
+msgstr "Tauler"
+
+#: .\apps\web\views.py:77 .\apps\web\views.py:271
+msgid "Projects"
+msgstr "Projectes"
+
+#: .\apps\web\views.py:89 .\apps\web\views.py:113 .\apps\web\views.py:131
+#: .\apps\web\views.py:209 .\apps\web\views.py:231 .\apps\web\views.py:254
+#: .\apps\web\views.py:289 .\apps\web\views.py:353 .\apps\web\views.py:381
+#: .\apps\web\views.py:466 .\templates\web\pages\courses.html:21
+#: .\templates\web\sidebar.html:39 .\templates\web\sidebar.html:41
+msgid "Courses"
+msgstr "Cursos"
+
+#: .\apps\web\views.py:227 .\apps\web\views.py:257
+#: .\templates\web\pages\activity_report_detail.html:96
+#: .\templates\web\pages\evaluation_group.html:166
+msgid "Report"
+msgstr "Informe"
+
+#: .\apps\web\views.py:250 .\apps\web\views.py:361
+msgid "Submission"
+msgstr "Enviament"
+
+#: .\apps\web\views.py:268
+#: .\templates\web\pages\elements\config\activity_wizard.html:81
+msgid "Project"
+msgstr "Projecte"
+
+#: .\apps\web\views.py:285
+msgid "Results"
+msgstr "Resultats"
+
+#: .\apps\web\views.py:303 .\apps\web\views.py:321
+msgid "Import Sessions"
+msgstr "Sessions d'Importació"
+
+#: .\apps\web\views.py:317
+msgid "Session"
+msgstr "Sessió"
+
+#: .\apps\web\views.py:335 .\apps\web\views.py:349
+#: .\templates\web\pages\activity_report.html:33
+#: .\templates\web\pages\activity_report.html:87
+#: .\templates\web\pages\elements\dashboard-activity-card.html:23
+#: .\templates\web\pages\evaluation_group.html:79
+#: .\templates\web\pages\evaluation_group.html:83
+#: .\templates\web\pages\submissions.html:31
+msgid "Submissions"
+msgstr "Enviaments"
+
+#: .\apps\web\views.py:377 .\apps\web\views.py:469
+#: .\templates\web\pages\activity_report.html:43
+#: .\templates\web\pages\elements\dashboard-activity-card.html:39
+#: .\templates\web\pages\elements\learner_feedback_info.html:6
+msgid "Evaluation"
+msgstr "Avaluació"
+
+#: .\apps\web\views.py:552 .\apps\web\views.py:572 .\apps\web\views.py:577
+#: .\apps\web\views.py:601 .\apps\web\views.py:602
+#: .\templates\web\sidebar.html:48
+msgid "FAQ"
+msgstr ""
+
+#: .\apps\web\views.py:595 .\templates\web\pages\elements\faq_view.html:29
+msgid "Edit"
+msgstr "Editar"
+
+#: .\apps\web\views.py:607
+msgid "New"
+msgstr "Nou"
+
+#: .\settings.py:241
+msgid "Catalan"
+msgstr "Català"
+
+#: .\settings.py:242
+msgid "Spanish"
+msgstr "Castellà"
+
+#: .\settings.py:243
+msgid "English"
+msgstr "Anglès"
+
+#: .\templates\web\index.html:11
+msgid "Active Courses"
+msgstr "Cursos Actius"
+
+#: .\templates\web\index.html:19
+msgid "No active courses"
+msgstr "No hi ha cursos actius"
+
+#: .\templates\web\index.html:27
+msgid "Active Activities"
+msgstr "Activitats Actives"
+
+#: .\templates\web\index.html:35
+msgid "No active activities"
+msgstr "No hi ha activitats actives"
+
+#: .\templates\web\navbar.html:166
+msgid "Logout"
+msgstr "Sortir"
+
+#: .\templates\web\pages\activity_configuration.html:43
+msgid "Data saved"
+msgstr "Dades guardades"
+
+#: .\templates\web\pages\activity_configuration.html:51
+msgid "Error saving data"
+msgstr "Error guardant les dades"
+
+#: .\templates\web\pages\activity_report.html:38
+#: .\templates\web\pages\elements\dashboard-activity-card.html:33
+msgid "Show statistics"
+msgstr "Mostra estadístiques"
+
+#: .\templates\web\pages\activity_report.html:49
+#: .\templates\web\pages\elements\dashboard-activity-card.html:46
+msgid "Configuration"
+msgstr "Configuració"
+
+#: .\templates\web\pages\activity_report.html:55
+msgid "Group"
+msgstr "Grup"
+
+#: .\templates\web\pages\activity_report.html:57
+#: .\templates\web\pages\evaluation_group.html:38
+msgid "All"
+msgstr "Tots"
+
+#: .\templates\web\pages\activity_report.html:64
+#: .\templates\web\pages\elements\group-card.html:30
+msgid "Download Excel file"
+msgstr "Descarregar fitxer Excel"
+
+#: .\templates\web\pages\activity_report.html:78
+#: .\templates\web\pages\elements\config\project_submissions.html:17
+#: .\templates\web\pages\submissions.html:64
+msgid "Status"
+msgstr "Estat"
+
+#: .\templates\web\pages\activity_report.html:79
+#: .\templates\web\pages\elements\config\project_submissions.html:18
+#: .\templates\web\pages\submissions.html:65
+msgid "Compiled"
+msgstr "Compila"
+
+#: .\templates\web\pages\activity_report.html:80
+#: .\templates\web\pages\activity_report.html:84
+#: .\templates\web\pages\elements\config\project_submissions.html:19
+#: .\templates\web\pages\evaluation_group.html:92
+#: .\templates\web\pages\submissions.html:66
+#: .\templates\web\pages\submissions.html:67
+msgid "Passed"
+msgstr "Passat"
+
+#: .\templates\web\pages\activity_report.html:81
+msgid "First Name"
+msgstr "Nom"
+
+#: .\templates\web\pages\activity_report.html:82
+msgid "Last Name"
+msgstr "Cognoms"
+
+#: .\templates\web\pages\activity_report.html:83
+msgid "Email"
+msgstr "Email"
+
+#: .\templates\web\pages\activity_report.html:85
+#: .\templates\web\pages\elements\config\project_submissions.html:20
+#: .\templates\web\pages\evaluation_group.html:101
+#: .\templates\web\pages\submissions.html:68
+msgid "Failed"
+msgstr "Fallit"
+
+#: .\templates\web\pages\activity_report.html:86
+#: .\templates\web\pages\elements\config\project_submissions.html:21
+#: .\templates\web\pages\submissions.html:69
+msgid "Time"
+msgstr "Temps"
+
+#: .\templates\web\pages\activity_report.html:88
+#: .\templates\web\pages\activity_statistics.html:52
+#: .\templates\web\pages\evaluation_group.html:70
+#: .\templates\web\pages\evaluation_group.html:74
+msgid "Score"
+msgstr "Puntuació"
+
+#: .\templates\web\pages\activity_report.html:89
+msgid "Leaked Mem"
+msgstr "Memòria Perduda"
+
+#: .\templates\web\pages\activity_report.html:90
+#: .\templates\web\pages\elements\config\project_files.html:18
+#: .\templates\web\pages\elements\config\project_submissions.html:16
+#: .\templates\web\pages\elements\config\project_weights.html:22
+#: .\templates\web\pages\submissions.html:63
+msgid "Id"
+msgstr "Id"
+
+#: .\templates\web\pages\activity_report.html:91
+msgid "Username"
+msgstr "Usuari"
+
+#: .\templates\web\pages\activity_report.html:92
+msgid "Last Submission"
+msgstr "Últim Enviament"
+
+#: .\templates\web\pages\activity_report_detail.html:38
+msgid "Download original submission"
+msgstr "Descarregar "
+
+#: .\templates\web\pages\activity_report_detail.html:47
+msgid "Download prepared code"
+msgstr "Descarregar codi preparat"
+
+#: .\templates\web\pages\activity_report_detail.html:56
+msgid "Download Valgrind report"
+msgstr "Descarregar l'informe de Valgrind"
+
+#: .\templates\web\pages\activity_report_detail.html:70
+#: .\templates\web\pages\evaluation_group.html:145
+msgid "Execution Log"
+msgstr "Registre d'Execució"
+
+#: .\templates\web\pages\activity_report_detail.html:75
+msgid "Tests"
+msgstr "Proves"
+
+#: .\templates\web\pages\activity_report_detail.html:80
+#: .\templates\web\pages\evaluation_group.html:150
+msgid "Errors"
+msgstr "Errors"
+
+#: .\templates\web\pages\activity_report_detail.html:85
+#: .\templates\web\pages\evaluation_group.html:155
+msgid "File Explorer"
+msgstr "Explorador de Fitxers"
+
+#: .\templates\web\pages\activity_report_detail.html:90
+#: .\templates\web\pages\evaluation_group.html:160
+msgid "Differences"
+msgstr "Diferències"
+
+#: .\templates\web\pages\activity_report_detail.html:140
+#: .\templates\web\pages\evaluation_group.html:204
+msgid "Missing expected activity report."
+msgstr "Falta l'informe de l'activitat."
+
+#: .\templates\web\pages\activity_statistics.html:38
+msgid "Qualification"
+msgstr "Qualificació"
+
+#: .\templates\web\pages\activity_statistics.html:66
+msgid "Test Results"
+msgstr "Resultat de les proves"
+
+#: .\templates\web\pages\activity_statistics.html:80
+msgid "Final Scores"
+msgstr "Puntuacions Finals"
+
+#: .\templates\web\pages\activity_statistics.html:94
+msgid "Submissions per day"
+msgstr "Enviaments per dia"
+
+#: .\templates\web\pages\activity_statistics.html:108
+msgid "Submission time"
+msgstr "Enviaments per hora"
+
+#: .\templates\web\pages\activity_statistics.html:122
+msgid "Submissions by status"
+msgstr "Enviaments per estat"
+
+#: .\templates\web\pages\activity_statistics.html:136
+msgid "Submission final status"
+msgstr "Qualificació final dels enviaments"
+
+#: .\templates\web\pages\course_detail.html:61
+msgid "Add new activity"
+msgstr "Afegir nova activitat"
+
+#: .\templates\web\pages\course_detail.html:64
+#: .\templates\web\pages\course_detail.html:74
+msgid "New activity"
+msgstr "Nova activitat"
+
+#: .\templates\web\pages\courses.html:31
+msgid "Semester"
+msgstr "Semestre"
+
+#: .\templates\web\pages\courses.html:32
+#: .\templates\web\pages\elements\config\activity_form.html:44
+#: .\templates\web\pages\elements\submission_errors.html:21
+msgid "Code"
+msgstr "Codi"
+
+#: .\templates\web\pages\courses.html:33
+#: .\templates\web\pages\elements\config\activity_form.html:96
+#: .\templates\web\pages\elements\config\activity_form.html:112
+#: .\templates\web\pages\elements\config\project_module_form.html:20
+#: .\templates\web\pages\elements\config\project_weights.html:23
+msgid "Name"
+msgstr "Nom"
+
+#: .\templates\web\pages\elements\config\activity_form.html:15
+msgid "Enabled"
+msgstr "Activa"
+
+#: .\templates\web\pages\elements\config\activity_form.html:21
+msgid "Self Evaluation"
+msgstr "Auto-avaluació"
+
+#: .\templates\web\pages\elements\config\activity_form.html:26
+msgid "Historic code"
+msgstr "Codi històric"
+
+#: .\templates\web\pages\elements\config\activity_form.html:33
+msgid "Include Report"
+msgstr "Inclou Informe"
+
+#: .\templates\web\pages\elements\config\activity_form.html:38
+msgid "Report Name"
+msgstr "Nom de l'informe"
+
+#: .\templates\web\pages\elements\config\activity_form.html:48
+msgid "Rubric"
+msgstr "Rúbrica"
+
+#: .\templates\web\pages\elements\config\activity_form.html:54
+#: .\templates\web\pages\submissions.html:28
+msgid "Start"
+msgstr "Inici"
+
+#: .\templates\web\pages\elements\config\activity_form.html:58
+#: .\templates\web\pages\submissions.html:29
+msgid "End"
+msgstr "Fi"
+
+#: .\templates\web\pages\elements\config\activity_form.html:64
+msgid "Maximum Submissions"
+msgstr "Enviaments máxims"
+
+#: .\templates\web\pages\elements\config\activity_form.html:68
+msgid "Maximum Submissions per day"
+msgstr "Enviaments máxims per dia"
+
+#: .\templates\web\pages\elements\config\activity_form.html:102
+#: .\templates\web\pages\elements\config\activity_form.html:118
+#: .\templates\web\pages\elements\submission_errors.html:22
+msgid "Description"
+msgstr "Descripció"
+
+#: .\templates\web\pages\elements\config\activity_form.html:129
+#: .\templates\web\pages\elements\config\project_form.html:151
+#: .\templates\web\pages\elements\config\project_modules.html:33
+msgid "Save changes"
+msgstr "Guardar canvis"
+
+#: .\templates\web\pages\elements\config\activity_wizard.html:31
+msgid ""
+"Fill all required information for the <strong>activity</strong> and the code "
+"<strong>project</strong>. If the project have modules such as libraries, "
+"define them in the <strong>modules</strong> step. Finally, <strong>validate "
+"the project</strong>. During the validation process, the <strong>base code</"
+"strong> is executed in the test scenario."
+msgstr ""
+"Omple tota la informació requerida per a l'<strong>activitat</strong> i el "
+"<strong>projecte</strong> de codi. Si el projecte té mòduls com per exemple "
+"llibreries, defineix-los dins el pas <strong>mòduls</strong>. Finalment, "
+"<strong>valida el projecte</strong>. Durant el procés de validació, el "
+"<strong>codi base</strong> s'executa en l'escenari de prova."
+
+#: .\templates\web\pages\elements\config\activity_wizard.html:39
+msgid ""
+"The <strong>test code</strong> fails to pass all tests. Check the "
+"<strong>files</strong> to ensure that all files that can be replaced by "
+"learners submissions are unlocked. Finally, <strong>test the project</"
+"strong> again."
+msgstr ""
+"El <strong>codi de prova</strong> falla en passar totes les proves. Verifica "
+"els <strong>fitxers</strong> per assegurar-te que tots aquells fitxers que "
+"poden ser substituits pels enviaments dels estudiants estiguin "
+"desbloquejats. Finalment, <strong>prova el projecte</strong> un altre cop."
+
+#: .\templates\web\pages\elements\config\activity_wizard.html:46
+msgid ""
+"The <strong>test code</strong> pass all tests, and therefore the activity is "
+"ready to receive and evaluate learners' submissions. However, <strong>total "
+"score</strong> for this activity is different to 100. If this is not the "
+"expected value, modify the <strong>weights</strong> of tests to adjust the "
+"final score."
+msgstr ""
+"El <strong>codi de prova</strong> passa totes les proves, i per tant, "
+"l'activitat està a punt per rebre i avaluar els enviaments dels estudiants. "
+"Tanmateix, la <strong>puntuació total</strong> d'aquesta activitat és "
+"diferent a 100. Si aquest no és el valor esperat, modifica els "
+"<strong>pesos</strong> de les proves per ajusta la puntiació final."
+
+#: .\templates\web\pages\elements\config\activity_wizard.html:54
+msgid "The activity is ready to receive and evaluate learners' submissions."
+msgstr ""
+"L'activitat està a punt per rebre i avaluar els enviaments dels estudiants."
+
+#: .\templates\web\pages\elements\config\activity_wizard.html:61
+msgid "Validate Project"
+msgstr "Valida el projecte"
+
+#: .\templates\web\pages\elements\config\activity_wizard.html:62
+msgid "Test Project"
+msgstr "Prova el projecte"
+
+#: .\templates\web\pages\elements\config\activity_wizard.html:74
+msgid "Activity"
+msgstr "Activitat"
+
+#: .\templates\web\pages\elements\config\activity_wizard.html:88
+msgid "Modules"
+msgstr "Mòduls"
+
+#: .\templates\web\pages\elements\config\activity_wizard.html:95
+msgid "Files"
+msgstr "Fitxers"
+
+#: .\templates\web\pages\elements\config\activity_wizard.html:102
+msgid "Weights"
+msgstr "Pesos"
+
+#: .\templates\web\pages\elements\config\project_files.html:5
+msgid ""
+"Unlocked files can be replaced by submissions. Ensure test files remain "
+"locked."
+msgstr ""
+"Els fitxers desbloquejats poden ser substituits pels enviaments. Assegura't "
+"que els fitxers de prova romanen bloquejats"
+
+#: .\templates\web\pages\elements\config\project_files.html:19
+#: .\templates\web\pages\elements\submission_errors.html:24
+msgid "File"
+msgstr "Fitxer"
+
+#: .\templates\web\pages\elements\config\project_files.html:20
+msgid "Module"
+msgstr "Mòdul"
+
+#: .\templates\web\pages\elements\config\project_files.html:21
+msgid "Filename"
+msgstr "Nom de Fitxer"
+
+#: .\templates\web\pages\elements\config\project_files.html:22
+msgid "Locked"
+msgstr "Bloquejat"
+
+#: .\templates\web\pages\elements\config\project_form.html:13
+#: .\templates\web\pages\elements\config\project_module_form.html:13
+#: .\templates\web\pages\elements\submission_errors.html:28
+msgid "Type"
+msgstr "Tipus"
+
+#: .\templates\web\pages\elements\config\project_form.html:15
+msgid "Select the type of project"
+msgstr "Selecciona el tipus de projecte"
+
+#: .\templates\web\pages\elements\config\project_form.html:20
+msgid "Executable name"
+msgstr "Nom de l'executable"
+
+#: .\templates\web\pages\elements\config\project_form.html:22
+msgid "Name of the executable to build"
+msgstr "Nom de l'executable a construir"
+
+#: .\templates\web\pages\elements\config\project_form.html:25
+msgid "Anchor file"
+msgstr "Fitxer de referència"
+
+#: .\templates\web\pages\elements\config\project_form.html:27
+msgid ""
+"File used to align submissions file structure with the base code. It must "
+"exist."
+msgstr ""
+"Fitxer utilitzat per alinear l'estructura de fitxers dels enviaments amb el "
+"codi base. Ha d'existir."
+
+#: .\templates\web\pages\elements\config\project_form.html:30
+#: .\templates\web\pages\elements\config\project_module_form.html:30
+msgid "Allowed files"
+msgstr "Fitxers acceptats"
+
+#: .\templates\web\pages\elements\config\project_form.html:43
+#: .\templates\web\pages\elements\config\project_module_form.html:43
+msgid "Custom"
+msgstr "Personalitzat"
+
+#: .\templates\web\pages\elements\config\project_form.html:48
+#: .\templates\web\pages\elements\config\project_module_form.html:48
+msgid "Regular expression for files allowed in submissions."
+msgstr "Expressió regular per als fitxers permesos en els enviaments."
+
+#: .\templates\web\pages\elements\config\project_form.html:53
+msgid "Docker Image"
+msgstr "Imatge de Docker"
+
+#: .\templates\web\pages\elements\config\project_form.html:55
+msgid "Docker image used to run the tests"
+msgstr "Imatge de Docker utilitzada per executar les proves"
+
+#: .\templates\web\pages\elements\config\project_form.html:58
+msgid "Test arguments"
+msgstr "Arguments de prova"
+
+#: .\templates\web\pages\elements\config\project_form.html:60
+msgid "Arguments provided to the executable to run the tests."
+msgstr "Arguments passats al programa per executar les proves. "
+
+#: .\templates\web\pages\elements\config\project_form.html:63
+msgid "Results file path"
+msgstr "Camí al fitxer de resultats"
+
+#: .\templates\web\pages\elements\config\project_form.html:65
+msgid "Path to the file with the final test results."
+msgstr "Camí al fitxer amb els resultats finals de les proves."
+
+#: .\templates\web\pages\elements\config\project_form.html:68
+msgid "Progress file path"
+msgstr "Camí al fitxer de progrés"
+
+#: .\templates\web\pages\elements\config\project_form.html:70
+msgid ""
+"Path to the file with test progress. It is used in case of execution error "
+"during testing."
+msgstr ""
+"Camí al fitxer amb el progrés de les proves. S'utilitza en cas que "
+"l'execució falli durant les proves."
+
+#: .\templates\web\pages\elements\config\project_form.html:75
+msgid "Time limit"
+msgstr "Límit de temps"
+
+#: .\templates\web\pages\elements\config\project_form.html:77
+msgid "Maximum time in seconds before stop test execution"
+msgstr "Temps màxim en segons abans de parar l'execució de les proves"
+
+#: .\templates\web\pages\elements\config\project_form.html:80
+msgid "Memory limit"
+msgstr "Límit de memòria"
+
+#: .\templates\web\pages\elements\config\project_form.html:82
+msgid "Limit of memory for test execution."
+msgstr "Límit de memòria per a la execució de les proves."
+
+#: .\templates\web\pages\elements\config\project_form.html:88
+msgid "Use Valgrind"
+msgstr "Utilitza Valgrind"
+
+#: .\templates\web\pages\elements\config\project_form.html:89
+msgid "Use Valgrind for memory analysis."
+msgstr "Utilitzar Valgrind per analitzar la memòria."
+
+#: .\templates\web\pages\elements\config\project_form.html:92
+msgid "Report path"
+msgstr "Camí a l'informe"
+
+#: .\templates\web\pages\elements\config\project_form.html:94
+msgid "Path where Valgrind report is stored."
+msgstr "Camí on es guarda l'informe del Valgrind."
+
+#: .\templates\web\pages\elements\config\project_form.html:101
+msgid "From ZIP files"
+msgstr "Des de fitxers ZIP"
+
+#: .\templates\web\pages\elements\config\project_form.html:105
+msgid "From GIT repository"
+msgstr "Des d'un repositori GIT"
+
+#: .\templates\web\pages\elements\config\project_form.html:112
+msgid "Base code"
+msgstr "Codi base"
+
+#: .\templates\web\pages\elements\config\project_form.html:114
+msgid "ZIP file with the base code."
+msgstr "Fitxer ZIP amb el codi base."
+
+#: .\templates\web\pages\elements\config\project_form.html:117
+#: .\templates\web\pages\elements\config\project_form.html:129
+#: .\templates\web\pages\elements\config\project_form.html:134
+msgid "Test code"
+msgstr "Codi de prova"
+
+#: .\templates\web\pages\elements\config\project_form.html:119
+msgid "ZIP file with the solution."
+msgstr "Fitxer ZIP amb la solució."
+
+#: .\templates\web\pages\elements\config\project_form.html:124
+msgid "GIT repository"
+msgstr "Repositori GIT"
+
+#: .\templates\web\pages\elements\config\project_form.html:126
+msgid "URL to the GIT repository."
+msgstr "URL al repositori GIT."
+
+#: .\templates\web\pages\elements\config\project_form.html:131
+msgid "Name of the branch with the base code."
+msgstr "Nom de la branca amb el codi base."
+
+#: .\templates\web\pages\elements\config\project_form.html:136
+msgid "Name of the branch with the solution code."
+msgstr "Nom de la branca amb el codi de la solució."
+
+#: .\templates\web\pages\elements\config\project_form.html:143
+msgid "Allow base project to fail"
+msgstr "Permet fallar el projecte base"
+
+#: .\templates\web\pages\elements\config\project_module_form.html:15
+msgid "Select the type of module"
+msgstr "Selecciona el tipus de mòdul"
+
+#: .\templates\web\pages\elements\config\project_module_form.html:22
+msgid "Name of the module"
+msgstr "Nom del mòdul"
+
+#: .\templates\web\pages\elements\config\project_module_form.html:25
+msgid "Base Path"
+msgstr "Camí base"
+
+#: .\templates\web\pages\elements\config\project_module_form.html:27
+msgid "Base path of this module in the source tree."
+msgstr "Camí base d'aquest mòdul dins l'estructura de codi."
+
+#: .\templates\web\pages\elements\config\project_modules.html:5
+msgid "Define additional modules of the project."
+msgstr "Defineix els mòduls addicionals del projecte."
+
+#: .\templates\web\pages\elements\config\project_modules.html:20
+msgid "Add new module"
+msgstr "Afegir un nou mòdul"
+
+#: .\templates\web\pages\elements\config\project_modules.html:23
+msgid "New module"
+msgstr "Nou mòdul"
+
+#: .\templates\web\pages\elements\config\project_modules.html:36
+msgid "Cancel"
+msgstr "Cancel·lar"
+
+#: .\templates\web\pages\elements\config\project_submissions.html:22
+#: .\templates\web\pages\submissions.html:70
+msgid "Submitted"
+msgstr "Enviat"
+
+#: .\templates\web\pages\elements\config\project_weights.html:5
+msgid "Assign a weight to each of the tests and/or test groups."
+msgstr "Assigna un pes a cada prova i/o grup de proves."
+
+#: .\templates\web\pages\elements\config\project_weights.html:10
+msgid "Total score"
+msgstr "Puntuació Final"
+
+#: .\templates\web\pages\elements\config\project_weights.html:24
+msgid "Weight"
+msgstr "Pes"
+
+#: .\templates\web\pages\elements\config\project_weights.html:25
+msgid "Section"
+msgstr "Secció"
+
+#: .\templates\web\pages\elements\course-card.html:11
+msgid "Course"
+msgstr "Curs"
+
+#: .\templates\web\pages\elements\course_statistics.html:8
+#: .\templates\web\pages\elements\course_statistics.html:12
+#: .\templates\web\pages\elements\course_statistics_summary.html:8
+#: .\templates\web\pages\elements\course_statistics_summary.html:12
+msgid "Learners"
+msgstr "Estudiants"
+
+#: .\templates\web\pages\elements\course_statistics.html:17
+#: .\templates\web\pages\elements\course_statistics.html:21
+#: .\templates\web\pages\elements\course_statistics_summary.html:17
+#: .\templates\web\pages\elements\course_statistics_summary.html:21
+msgid "Instructors"
+msgstr "Professors"
+
+#: .\templates\web\pages\elements\course_statistics.html:26
+#: .\templates\web\pages\elements\course_statistics.html:30
+#: .\templates\web\pages\elements\course_statistics_summary.html:26
+#: .\templates\web\pages\elements\course_statistics_summary.html:30
+msgid "Groups"
+msgstr "Grups"
+
+#: .\templates\web\pages\elements\course_statistics.html:35
+#: .\templates\web\pages\elements\course_statistics.html:39
+#: .\templates\web\pages\elements\course_statistics_summary.html:35
+#: .\templates\web\pages\elements\course_statistics_summary.html:39
+msgid "Valid activities"
+msgstr "Activitats vàlides"
+
+#: .\templates\web\pages\elements\course_statistics.html:44
+#: .\templates\web\pages\elements\course_statistics.html:48
+#: .\templates\web\pages\elements\course_statistics_summary.html:44
+#: .\templates\web\pages\elements\course_statistics_summary.html:48
+msgid "Not valid activities"
+msgstr "Activitats no vàlides"
+
+#: .\templates\web\pages\elements\dashboard-activity-card.html:28
+msgid "Open Report"
+msgstr "Obrir Informe"
+
+#: .\templates\web\pages\elements\faq_except.html:9
+#: .\templates\web\pages\elements\faq_view.html:6
+msgid "Draft"
+msgstr "Esborrany"
+
+#: .\templates\web\pages\elements\faq_except.html:29
+msgid "Last update"
+msgstr "Última actualització"
+
+#: .\templates\web\pages\elements\faq_form.html:13
+msgid "Public"
+msgstr "Públic"
+
+#: .\templates\web\pages\elements\faq_form.html:19
+#: .\templates\web\pages\elements\faq_search.html:14
+msgid "Tags"
+msgstr "Etiquetes"
+
+#: .\templates\web\pages\elements\faq_form.html:45
+#: .\templates\web\pages\elements\faq_form.html:61
+msgid "Title"
+msgstr "Títol"
+
+#: .\templates\web\pages\elements\faq_form.html:51
+#: .\templates\web\pages\elements\faq_form.html:67
+msgid "Content"
+msgstr "Contingut"
+
+#: .\templates\web\pages\elements\faq_search.html:10
+msgid "Search"
+msgstr "Cerca"
+
+#: .\templates\web\pages\elements\faq_search.html:18
+msgid "Language"
+msgstr "Idioma"
+
+#: .\templates\web\pages\elements\faq_search.html:23
+msgid "Filter"
+msgstr "Filtra"
+
+#: .\templates\web\pages\elements\faq_search.html:37
+msgid "No elements found matching those criteria"
+msgstr "No hi ha elements que cumpleixin amb els criteris"
+
+#: .\templates\web\pages\elements\faq_view.html:28
+msgid "Delete"
+msgstr "Eliminar"
+
+#: .\templates\web\pages\elements\feedback_form.html:12
+msgid "Make public"
+msgstr "Fer públic"
+
+#: .\templates\web\pages\elements\feedback_form.html:16
+msgid "Final Score"
+msgstr "Puntuació Final"
+
+#: .\templates\web\pages\elements\feedback_form.html:33
+msgid "Computed"
+msgstr "Calculat"
+
+#: .\templates\web\pages\elements\feedback_form.html:34
+msgid "Set"
+msgstr "Assigna"
+
+#: .\templates\web\pages\elements\feedback_form.html:40
+msgid "Feedback is mandatory for qualifications in range C-/C+"
+msgstr ""
+"El retorn personalitzat és obligatori per qualificacions en el rang C-/C+"
+
+#: .\templates\web\pages\elements\feedback_form.html:42
+msgid "Feedback"
+msgstr "Retorn"
+
+#: .\templates\web\pages\elements\group-card.html:19
+msgid "Pending evaluations"
+msgstr "Avaluacions pendents"
+
+#: .\templates\web\pages\elements\submission_errors.html:6
+msgid "Show All"
+msgstr "Mostrar Tots"
+
+#: .\templates\web\pages\elements\submission_errors.html:7
+msgid "Memory Error"
+msgstr "Error de Memòria"
+
+#: .\templates\web\pages\elements\submission_errors.html:8
+msgid "Memory Leak"
+msgstr "Memòria Perduda"
+
+#: .\templates\web\pages\elements\submission_errors.html:23
+msgid "Function"
+msgstr "Funció"
+
+#: .\templates\web\pages\elements\submission_errors.html:25
+msgid "Line"
+msgstr "Línia"
+
+#: .\templates\web\pages\elements\submission_errors.html:26
+msgid "Context"
+msgstr "Context"
+
+#: .\templates\web\pages\elements\submission_errors.html:27
+msgid "Value"
+msgstr "Valor"
+
+#: .\templates\web\pages\evaluation_group.html:36
+msgid "Show"
+msgstr "Mostrar"
+
+#: .\templates\web\pages\evaluation_group.html:39
+msgid "Pending"
+msgstr "Pendents"
+
+#: .\templates\web\pages\evaluation_group.html:88
+msgid "Passed tests"
+msgstr "Proves Passades"
+
+#: .\templates\web\pages\evaluation_group.html:97
+msgid "Failed tests"
+msgstr "Proves Fallides"
+
+#: .\templates\web\pages\evaluation_group.html:107
+msgid "Leaked Memory"
+msgstr "Memòria Perduda"
+
+#: .\templates\web\pages\evaluation_group.html:111
+msgid "Memory"
+msgstr "Memòria"
+
+#: .\templates\web\pages\evaluation_group.html:140
+msgid "Assessment"
+msgstr "Avaluació"
+
+#: .\templates\web\pages\evaluation_group.html:213
+msgid "No submissions to evaluate"
+msgstr "No hi ha enviaments per avaluar"
+
+#: .\templates\web\pages\submissions.html:32
+msgid "Submissions last 24h"
+msgstr "Enviaments últimes 24h"
+
+#: .\templates\web\pages\submissions.html:82
+msgid "Choose one learner to submit in name of"
+msgstr "Tria un estudiant per enviar en nom seu"
+
+#: .\templates\web\pages\submissions.html:84
+msgid "Drop files here to upload"
+msgstr "Arrastra fitxers aquí per pujar-los"
+
+#: .\templates\web\sidebar.html:46
+msgid "Frequent Asked Questions"
+msgstr "Pregutes Freqüents"
+
+#: .\templates\web\sidebar.html:53 .\templates\web\sidebar.html:55
+msgid "Administration"
+msgstr "Administració"
+
+#: .\templates\web\sidebar.html:57
+msgid "Import"
+msgstr "Importar"
+
+#: .\templates\web\sidebar.html:60
+msgid "Admin"
+msgstr "Administrar"

@@ -1,0 +1,177 @@
+# You can override the included template(s) by including variable overrides
+# SAST customization: https://docs.gitlab.com/ee/user/application_security/sast/#customizing-the-sast-settings
+# Secret Detection customization: https://docs.gitlab.com/ee/user/application_security/secret_detection/#customizing-settings
+# Dependency Scanning customization: https://docs.gitlab.com/ee/user/application_security/dependency_scanning/#customizing-the-dependency-scanning-settings
+# Container Scanning customization: https://docs.gitlab.com/ee/user/application_security/container_scanning/#customizing-the-container-scanning-settings
+# Note that environment variables can be set in several places
+# See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  GIT_STRATEGY: clone
+stages:
+- analyze
+- test
+- publish
+cache:
+  paths:
+  - ".cache/pip"
+  - venv/
+
+pylint:
+  stage: analyze
+  image: python:3.12
+  needs: []
+  before_script:
+  - mkdir -p public/badges public/lint
+  - echo undefined > public/badges/$CI_JOB_NAME.score
+  - pip install pylint-gitlab
+  script:
+  - pip install -r requirements.txt -r requirements_dev.txt
+  - pylint --exit-zero --load-plugins=pylint_django --output-format=text --max-line-length=120
+    src/pelp | tee /tmp/pylint.txt
+  - sed -n 's/^Your code has been rated at \([-0-9.]*\)\/.*/\1/p' /tmp/pylint.txt
+    > public/badges/$CI_JOB_NAME.score
+  - pylint --exit-zero --output-format=pylint_gitlab.GitlabCodeClimateReporter src/pelp
+    > codeclimate.json
+  - pylint --exit-zero --output-format=pylint_gitlab.GitlabPagesHtmlReporter src/pelp
+    > public/lint/index.html
+  after_script:
+  - anybadge --overwrite --label $CI_JOB_NAME --value=$(cat public/badges/$CI_JOB_NAME.score)
+    --file=public/badges/$CI_JOB_NAME.svg 4=red 6=orange 8=yellow 10=green
+  - 'echo "Your score is: $(cat public/badges/$CI_JOB_NAME.score)"'
+  artifacts:
+    paths:
+    - public
+    reports:
+      codequality: codeclimate.json
+    when: always
+
+pytest:
+  stage: test
+  image: python:3.12
+  needs: ["pylint"]
+  variables:
+    MYSQL_ROOT_PASSWORD: ".pelp-password"
+    MYSQL_DATABASE: pelp
+    MYSQL_USER: pelp
+    MYSQL_PASSWORD: pelp-password
+    MINIO_ACCESS_KEY: minioadmin
+    MINIO_SECRET_KEY: minioadmin
+    DB_ENGINE: mysql
+    DB_HOST: db
+    DB_NAME: "$MYSQL_DATABASE"
+    DB_USER: "$MYSQL_USER"
+    DB_PASSWORD: "$MYSQL_PASSWORD"
+    DB_PORT: 3306
+    REDIS_HOST: redis
+    REDIS_PORT: 6379
+    DJANGO_SECRET: my_secret_key
+    ALLOWED_HOSTS: "*"
+    DJANGO_SETTINGS_MODULE: pelp.settings
+  services:
+  - name: redis
+    alias: redis
+  - name: mariadb
+    alias: db
+  - name: bitnami/minio:latest
+    alias: minio
+  before_script:
+  - pip install -r requirements.txt -r requirements_dev.txt
+  - cd src
+  - cp pelp/manage.py .
+  - python manage.py migrate
+  - export PYTHONPATH=$PYTHONPATH:$PWD
+  - cd ..
+  script:
+  - export
+  - coverage run -m pytest src/tests
+  - coverage report
+  - coverage xml
+  coverage: '/(?i)total.*? (100(?:\.0+)?\%|[1-9]?\d(?:\.\d+)?\%)$/'
+  artifacts:
+    expire_in: 2 days
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage.xml
+include:
+- template: Security/Secret-Detection.gitlab-ci.yml
+- template: Security/SAST.gitlab-ci.yml
+sast:
+  stage: test
+
+build_pelp:
+  image: docker:24.0.5
+  stage: publish
+  needs: ["pytest"]
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+  services:
+    - docker:24.0.5-dind
+  before_script:
+    #- docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY --username $CI_REGISTRY_USER --password-stdin
+  script:
+    - docker build --pull -t "$CI_REGISTRY_IMAGE/pelp:$CI_COMMIT_SHA" -f docker/Dockerfile .
+    - docker push "$CI_REGISTRY_IMAGE/pelp:$CI_COMMIT_SHA"
+    - docker tag "$CI_REGISTRY_IMAGE/pelp:$CI_COMMIT_SHA" "$CI_REGISTRY_IMAGE/pelp:latest"
+    - docker push "$CI_REGISTRY_IMAGE/pelp:latest"
+
+build_images:
+  image: docker:24.0.5
+  stage: publish
+  needs: ["pytest"]
+  when: manual
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+  services:
+    - docker:24.0.5-dind
+  before_script:
+    - docker info
+    - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY --username $CI_REGISTRY_USER --password-stdin
+  script:
+    - docker build --pull -t "$CI_REGISTRY_IMAGE/ubuntu-valgrind:$CI_COMMIT_SHA" images/ubuntu-valgrind/
+    - docker push "$CI_REGISTRY_IMAGE/ubuntu-valgrind:$CI_COMMIT_SHA"
+    - docker build --pull -t "$CI_REGISTRY_IMAGE/gcc11-valgrind:$CI_COMMIT_SHA" images/gcc11-valgrind/
+    - docker push "$CI_REGISTRY_IMAGE/gcc11-valgrind:$CI_COMMIT_SHA"
+
+publish_pelp:
+  image: docker:24.0.5
+  stage: publish
+  needs: ["build_pelp"]
+  variables:
+    GIT_STRATEGY: none  
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+  services:
+    - docker:24.0.5-dind  
+  before_script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY --username $CI_REGISTRY_USER --password-stdin
+    - docker pull "$CI_REGISTRY_IMAGE/pelp:$CI_COMMIT_SHA"
+    - docker login -u "$TESLA_CE_REGISTRY_USER" -p "$TESLA_CE_REGISTRY_ROBOT_SECRET" $TESLA_CE_REGISTRY_URL
+  script:
+    - docker tag "$CI_REGISTRY_IMAGE/pelp:$CI_COMMIT_SHA" registry.tesla-ce.eu/pelp/pelp:latest
+    - docker push registry.tesla-ce.eu/pelp/pelp:latest
+
+publish_images:
+  image: docker:24.0.5
+  stage: publish
+  needs: ["build_images"]
+  variables:
+    GIT_STRATEGY: none  
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+  services:
+    - docker:24.0.5-dind  
+  before_script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY --username $CI_REGISTRY_USER --password-stdin
+    - docker login -u "$TESLA_CE_REGISTRY_USER" -p "$TESLA_CE_REGISTRY_ROBOT_SECRET" $TESLA_CE_REGISTRY_URL
+  script:
+    - docker pull "$CI_REGISTRY_IMAGE/ubuntu-valgrind:$CI_COMMIT_SHA"
+    - docker tag "$CI_REGISTRY_IMAGE/ubuntu-valgrind:$CI_COMMIT_SHA" registry.tesla-ce.eu/pelp/pelp:latest
+    - docker push registry.tesla-ce.eu/pelp/ubuntu-valgrind:latest
+    - docker pull "$CI_REGISTRY_IMAGE/gcc11-valgrind:$CI_COMMIT_SHA"
+    - docker tag "$CI_REGISTRY_IMAGE/gcc11-valgrind:$CI_COMMIT_SHA" registry.tesla-ce.eu/pelp/pelp:latest
+    - docker push registry.tesla-ce.eu/pelp/gcc11-valgrind:latest

@@ -1,0 +1,68 @@
+{% load web_utils %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        .tg  {border-collapse:collapse;border-spacing:0;}
+        .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+          overflow:hidden;padding:10px 5px;word-break:normal;}
+        .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+          font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+        .tg .tg-uqo3{background-color:#efefef;text-align:center;vertical-align:top}
+        .tg .tg-yj5y{background-color:#efefef;border-color:inherit;text-align:center;vertical-align:top}
+        .tg .tg-8m8h{background-color:#cbcefb;border-color:inherit;font-weight:bold;text-align:center;vertical-align:top}
+        .tg .tg-kndx{background-color:#34ff34;border-color:inherit;text-align:center;vertical-align:top}
+        .tg .tg-lbzb{background-color:#fe0000;text-align:center;vertical-align:top}
+        .tg .tg-rbv1{background-color:#9698ed;border-color:inherit;color:#333333;font-weight:bold;text-align:center;vertical-align:top}
+        .tg .tg-ozja{background-color:#ecf4ff;text-align:center;vertical-align:top}
+        .execution-logs {background-color: #333333; color: white;}
+    </style>
+</head>
+<body>
+<h1><strong>Submission number:</strong> {{ submission.id }}</h1>
+<h2><strong>Final status:</strong> {{ submission.get_status_display }}</h2>
+{% if submission.error %}
+    <h2><strong>Error:</strong> {{ submission.error|safe }}</h2>
+{% endif %}
+<h2><strong>Submissions in the last 24h:</strong> {{ stats.submissions_last_day }} of {{ stats.max_day }}</h2>
+<h2><strong>Total submissions:</strong> {{ stats.submissions_total }} of {{ stats.max_total }}</h2>
+{% if results  %}
+    <table class="tg">
+        <thead>
+            <tr>
+                <th class="tg-rbv1" colspan="{{ results.total|increment }}">Test Results</th>
+            </tr>
+            <tr>
+                {% for section in results.sections %}
+                    <th class="tg-rbv1" colspan="{{ section.num_tests|increment }}">{{ section.code }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="tg-8m8h">Test</td>
+                {% for test in results.tests %}
+                    <td class="tg-uqo3">{{ test.code }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td class="tg-8m8h">Result</td>
+                {% for test_result in results.results %}
+                    {% if test_result.passed %}
+                        <td class="tg-kndx">{{ test_result.result }}</td>
+                    {% else %}
+                        <td class="tg-lbzb">{{ test_result.result }}</td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+{% endif %}
+    <h2>Execution logs</h2>
+    <div class="execution-logs">
+        <pre>
+{{ execution_log|safe }}
+        </pre>
+    </div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+{% load i18n %}
+{% load web_utils %}
+<div class="col-md-6 col-xl-4">
+    <div class="card">
+        <div class="card-body px-3 py-4 position-relative">
+            <a class="stretched-link d-flex align-items-center text-reset"
+               href="/course/{{ activity.course.id }}/activity/{{ activity.id }}/evaluate/{{ group.id }}/">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="ms-3 overflow-hidden">
+                            <h5 class="card-text mb-0">{{ group.code }}</h5>
+                            <p class="card-text text-uppercase text-muted text-sm">{{ group.name }}</p>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="ms-3 overflow-hidden">
+                            {% if group|num_pending_evaluations:activity > 0 %}
+                            <p class="card-text text-muted text-sm mt-2 alert alert-warning text-center">
+                                <strong>{% trans "Pending evaluations" %}: </strong>{{ group|num_pending_evaluations:activity }}
+                            </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="card-footer position-relative activity-actions">
+            <a class="btn-outline-primary" id="download-excel" href="/api/course/{{ activity.course.id }}/activity/{{ activity.id }}/report/download_feedback/?group={{ group.id }}">
+                <svg class="svg-icon svg-icon-lg svg-icon-heavy me-xl-2">
+                    <use xlink:href="#export-server-2151"><title>{% trans "Download Excel file" %}</title></use>
+                </svg>
+            </a>
+        </div>
+    </div>
+</div>

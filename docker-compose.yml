@@ -1,0 +1,159 @@
+version: "3.7"
+services:
+  traefik:
+    image: "traefik:v2.6"
+    command:
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.http.address=:80"
+    ports:
+      - "8081:80"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - db_volume:/var/lib/mysql
+#    ports:
+#      - 3307:3306
+
+  redis:
+    image: redis:alpine
+    restart: always
+    volumes:
+      - redis_volume:/data
+
+#  minio:
+#    image: minio/minio
+#    volumes:
+#      - minio_volume:/data
+#    restart: always
+#    environment:
+#      MINIO_REGION_NAME: ${STORAGE_REGION}
+#      MINIO_ACCESS_KEY: ${STORAGE_ACCESS_KEY}
+#      MINIO_SECRET_KEY: ${STORAGE_SECRET_KEY}
+#    command: server /data --console-address ":9001"
+#    healthcheck:
+#      test: ["CMD", "curl", "-f", "http://localhost:9001/minio/health/live"]
+#      interval: 30s
+#      timeout: 20s
+#      retries: 3
+#    ports:
+#      - 19000:9000
+#      - 19001:9001
+
+  web: &pelp-base
+    image: pelp/web:latest
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    restart: always
+    environment:
+      DEBUG: 0
+      DJANGO_SECRET: ${DJANGO_SECRET}
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS}
+      ROOT_LOG_LEVEL: ${ROOT_LOG_LEVEL}
+      DJANGO_LOG_LEVEL: ${DJANGO_LOG_LEVEL}
+      DB_ENGINE: ${DB_ENGINE}
+      DB_HOST: ${DB_HOST}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      STORAGE_ACCESS_KEY: ${STORAGE_ACCESS_KEY}
+      STORAGE_SECRET_KEY: ${STORAGE_SECRET_KEY}
+      STORAGE_BUCKET_NAME: ${STORAGE_BUCKET_NAME}
+      STORAGE_REGION: ${STORAGE_REGION}
+      STORAGE_URL: ${STORAGE_URL}
+      STORAGE_PUBLIC_BUCKET_NAME: ${STORAGE_PUBLIC_BUCKET_NAME}
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
+      SENTRY_ENABLED: ${SENTRY_ENABLED}
+      SENTRY_DSN: ${SENTRY_DSN}
+      SENTRY_RELEASE: ${SENTRY_RELEASE}
+      SENTRY_SERVER_NAME: ${SENTRY_SERVER_NAME}
+      SENTRY_ENVIRONMENT: ${SENTRY_ENVIRONMENT}
+      EXECUTION_PATH: ${EXECUTION_PATH}
+      DOCKER_MOUNT_ROOT_PATH: ${DOCKER_MOUNT_ROOT_PATH}
+      DOCKER_HOST: ${DOCKER_HOST}
+      MAX_PARALLEL_RUNS: ${MAX_PARALLEL_RUNS}
+      EMAIL_HOST: ${EMAIL_HOST}
+      EMAIL_PORT: ${EMAIL_PORT}
+      EMAIL_HOST_USER: ${EMAIL_HOST_USER}
+      EMAIL_HOST_PASSWORD: ${EMAIL_HOST_PASSWORD}
+      EMAIL_FROM: ${EMAIL_FROM}
+      IMAP_SERVER: ${IMAP_SERVER}
+      IMAP_USER: ${IMAP_USER}
+      IMAP_PASSWORD: ${IMAP_PASSWORD}
+      PROMETHEUS_GW: ${PROMETHEUS_GW}
+      CANVAS_API_URL: ${CANVAS_API_URL}
+      CANVAS_API_TOKEN: ${CANVAS_API_TOKEN}
+    depends_on:
+      - db
+      - redis
+      #- minio
+    ports:
+      - 8080:5000
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pelp.rule=Host(`pelp.uoc.edu`, `pelp.sunai.uoc.edu`)"
+      - "traefik.http.routers.pelp.entrypoints=http"
+      - "traefik.http.services.pelp-service.loadBalancer.sticky.cookie=true"
+      - "traefik.http.services.pelp-service.loadbalancer.server.port=5000"
+      - "traefik.http.routers.pelp.service=pelp-service"
+
+  worker:
+    <<: *pelp-base
+    command: /venv/bin/celery -A pelp worker -l warning --concurrency 4 # -P gevent
+    privileged: true
+    restart: always
+#    deploy:
+#      resources:
+#        limits:
+#          memory: 5g
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - submission_volume:/data/submission
+    ports: []    
+    labels: []
+
+  worker-beat:
+    <<: *pelp-base
+    command: /venv/bin/celery -A pelp beat -l warning --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    restart: always
+    depends_on:
+      - db
+      - redis
+    ports: []
+    volumes: []
+    
+volumes:
+  db_volume:
+    driver_opts:
+      type: none
+      device: ${PWD}/_data/db
+      o: bind
+  redis_volume:
+    driver_opts:
+      type: none
+      device: ${PWD}/_data/redis
+      o: bind
+  minio_volume:
+    driver_opts:
+      type: none
+      device: ${PWD}/_data/minio
+      o: bind
+  submission_volume:
+    driver_opts:
+      type: none
+      device: ${PWD}/_data/submission
+      o: bind

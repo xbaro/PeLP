@@ -1,0 +1,47 @@
+{% load i18n %}
+{% load web_utils %}
+{% load static %}
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title text-muted">{% if not faq.public %}<strong>[{% trans "Draft" %}]</strong> {% endif %}{{ faq|trans_title:language }}</h5>
+        <div class="col-12">
+            {% for tag in faq.tags.all %}
+                <a href="/faq/?tags={{ tag.tag }}">
+                    <span class="badge rounded-pill bg-primary">{{ tag|trans_tag:language }}</span>
+                </a>
+            {% endfor %}
+        </div>
+        <div class="col-12">
+            {% for lang in faq.available_languages %}
+                {% if lang != language %}
+                    <a href="/faq/{{ faq.id }}/?language={{ lang }}">
+                        <i class="lang-icons">
+                            {% with "img/lang-flag/"|add:lang|add:".png" as flag_url %}
+                                <img src="{% static flag_url %}" width="16" height="11" alt="language">
+                            {% endwith %}
+                        </i>
+                    </a>
+                {% endif %}
+            {% endfor %}
+        </div>
+        {% if request.user.is_staff %}
+            <a class="btn btn-danger float-end" role="button" href="delete/">{% trans "Delete" %}</a>
+            <a class="btn btn-outline-primary float-end" role="button" href="edit/">{% trans "Edit" %}</a>
+        {% endif %}
+    </div>
+    <div class="card-body">
+        <div class="col-md-2 text-right float-end">
+            <input id="faq-rating-{{ faq.id }}" value="{{ faq|faq_rating:request.user }}" type="text"
+                       data-theme="krajee-fas"
+                       class="rating" data-min=0 data-max=5 data-step=1 data-size="xs"
+                       data-show-caption=false
+                       data-show-clear=false
+                       data-faq-id="{{ faq.id }}"
+                >
+        </div>
+        <div class="text-muted text-justify">
+            {{ faq|trans_content:language|safe }}
+        </div>
+    </div>
+</div>
+

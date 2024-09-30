@@ -1,0 +1,40 @@
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+/tmp/
+
+/dev_conf.cfg
+celerybeat.pid
+
+*.iml
+.idea
+/dependency-check-report.html
+/licenses.md
+/static/
+celerybeat-schedule.dat
+celerybeat-schedule.dir
+
+/_data/
+
+/infer-out/

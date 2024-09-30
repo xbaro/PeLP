@@ -1,0 +1,153 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% load i18n %}
+{% load web_utils %}
+
+{% block page_extra_css %}
+    <!-- Simple DataTables CSS-->
+    <link rel="stylesheet" href="{% static 'vendor/simple-datatables/style.css' %}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.2.0/dist/select2-bootstrap-5-theme.min.css" />
+{% endblock %}
+
+{% block content %}
+    <section class="dashboard">
+        <div class="container-fluid">
+            <div class="row-cols-1">
+                <div class="col-lg-auto">
+                    <div class="card">
+                        <div class="card-header">
+                            {% get_current_language as LANGUAGE_CODE %}
+                            <h3 class="h4 mb-0">{{ activity.course.code }} - {{ activity|trans_name:LANGUAGE_CODE }}</h3>
+                            <div class="row text-muted justify-content-between mt-2">
+                                <div class="col-9">
+                                    <strong>{% trans "Start" %}:</strong> {{ activity.start }}<br>
+                                    <strong>{% trans "End" %}:</strong> {{ activity.end }}<br>
+                                    {% if activity|is_learner:request.user %}
+                                    <strong>{% trans "Submissions" %}:</strong> <span id="num_total_submissions">{{ activity|total_submissions:request.user }}</span> / <span id="max_total_submissions">{{ activity.max_submissions }}</span><br>
+                                    <strong>{% trans "Submissions last 24h" %}:</strong> <span id="num_day_submissions">{{ activity|day_submissions:request.user }}</span> / <span id="max_day_submissions">{{ activity.max_submissions_day }}</span>
+                                    {% endif %}
+                                </div>
+                                <div class="col-3 text-muted text-justify">
+                                    <canvas id="tests_chart" width="100%" height="100%"
+                                            data-course-id="{{ activity.course.id }}"
+                                            data-activity-id="{{ activity.id }}"
+                                            data-submission-id="{{ last_submission.id }}"
+                                            data-show-legend="false">
+                                    </canvas>
+                                </div>
+                            </div>
+                            {% if activity.description %}
+                                <div class="text-muted text-justify mt-4">
+                                    {{ activity|trans_description:LANGUAGE_CODE|safe }}
+                                </div>
+                            {% endif %}
+                            {% if activity_feedback and activity_feedback.public %}
+                                {% include 'web/pages/elements/learner_feedback_info.html' %}
+                            {% endif %}
+                        </div>
+                        <div class="card-body">
+                            {% get_current_language as LANGUAGE_CODE %}
+                            <table id="submissions" class="table table-striped table-bordered" style="width:100%"
+                                       data-server-side="true",
+                                       data-processing="true",
+                                       data-ajax="/api/course/{{ activity.course.id }}/activity/{{ activity.id }}/my_submissions/?format=datatables"
+                                       data-language-url="{% static 'datatables/'|add:LANGUAGE_CODE|add:'.json' %}"
+                            >
+                                <thead>
+                                    <tr>
+                                        <th data-data="id">{% trans "Id" %}</th>
+                                        <th data-data="status">{% trans "Status" %}</th>
+                                        <th data-data="built">{% trans "Compiled" %}</th>
+                                        <th data-data="test_passed">{% trans "Passed" %}</th>
+                                        <th data-data="num_test_passed">#{% trans "Passed" %}</th>
+                                        <th data-data="num_test_failed">#{% trans "Failed" %}</th>
+                                        <th data-data="elapsed_time">{% trans "Time" %} (ms)</th>
+                                        <th data-data="submitted_at">{% trans "Submitted" %}</th>
+                                        <th data-data="learner">{% trans "Learner" %}</th>
+                                        <th data-data="submission"></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        {% if activity|is_instructor:request.user or activity.is_active %}
+                        <form action="/api/course/{{ activity.course.id }}/activity/{{ activity.id }}/my_submissions/upload/" class="mb-4 dropzone" id="submission_upload">
+                            <div class="dropzone-previews"></div>
+                            {% csrf_token %}
+                            {% if activity|is_instructor:request.user %}
+                                <select id="learner" name="learner" class="form-select" data-placeholder="{% trans 'Choose one learner to submit in name of' %}" data-allow-clear="1"></select>
+                            {% endif %}
+                            <div class="dz-message" data-dz-message><span>{% trans "Drop files here to upload" %}</span></div>
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block page_body_scripts %}
+    <!-- JQuery -->
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
+    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js" integrity="sha256-Y26AMvaIfrZ1EQU49pf6H4QzVTrOI8m9wQYKkftBt4s=" crossorigin="anonymous"></script>
+    {% if activity|is_instructor:request.user or request.user.is_staff %}
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            $('#learner').select2({
+                theme: "bootstrap-5",
+                ajax: {
+                    url: '{% url 'api:course-learner-list' activity.course.id %}',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                        var query = {
+                            search: params.term,
+                            page: params.page || 1
+                        }
+                        // Query parameters will be ?search=[term]&page=[page]
+                        return query;
+                    },
+                    processResults: function (data, params) {
+                        params.page = params.page || 1;
+                        return {
+                            results: $.map(data.results, function (obj) {
+                                obj.text = obj.text || obj.last_name + ', ' + obj.first_name;
+                                return obj;
+                            }),
+                            pagination: {
+                                more: data.next != null
+                            }
+                        };
+                    }
+                },
+            });
+        });
+    </script>
+    <input type="hidden" name="show_learner_info" value="1">
+    {% else %}
+    <input type="hidden" name="show_learner_info" value="0">
+    {% endif %}
+    {% if user.is_staff or activity|is_instructor:user %}
+    <input type="hidden" name="submission_prefix" value="">
+    {% else %}
+    <input type="hidden" name="submission_prefix" value="submissions/">
+    {% endif %}
+    <input type="hidden" name="activity_id" value="{{ activity.id }}">
+    <script src="{% static 'js/plot_tests.js' %}"></script>
+    <script src="{% static 'vendor/moment/moment-with-locales.js' %}"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.11.5/dataRender/datetime.js"></script>
+    <script src="{% static 'js/pages/submissions.js' %}"></script>
+    <script src="{% static 'js/pages/submissions.ws.js' %}"></script>
+{% endblock %}

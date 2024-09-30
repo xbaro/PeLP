@@ -1,0 +1,45 @@
+{% extends 'web/base.html' %}
+{% load i18n %}
+
+{% block content %}
+    <section class="dashboard">
+        <div class="container-fluid">
+            <div class="row-cols-1">
+                <div class="col-lg-auto">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="h4 mb-0">{% trans 'Active Courses' %}</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row" data-masonry="{&quot;percentPosition&quot;: true }">
+                                {% for course in courses %}
+                                    {% include "web/pages/elements/course-card.html" with course=course %}
+                                {% empty %}
+                                    <p class="card-text text-muted text-sm">
+                                        {% trans "No active courses" %}
+                                    </p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="h4 mb-0">{% trans 'Active Activities' %}</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row" data-masonry="{&quot;percentPosition&quot;: true }">
+                                {% for activity in activities %}
+                                    {% include "web/pages/elements/dashboard-activity-card.html" with activity=activity %}
+                                {% empty %}
+                                    <p class="card-text text-muted">
+                                        {% trans "No active activities" %}
+                                    </p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

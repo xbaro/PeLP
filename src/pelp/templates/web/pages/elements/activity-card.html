@@ -1,0 +1,54 @@
+<div class="col-md-6 col-xl-4">
+    <div class="card">
+        <div class="card-body px-3 py-4 position-relative">
+            <a class="stretched-link d-flex align-items-center text-reset"
+               href="/course/{{ course.id }}/activity/{{ activity.id }}/">
+                <div class="row">
+                    <div class="col">
+                        <svg class="svg-icon svg-icon-lg svg-icon-heavy me-xl-2">
+                            {% if activity.project.status == 9 %}
+                                <use xlink:href="#check-in-place-859"></use>
+                            {% elif activity.project.status == 7 %}
+                                <use xlink:href="#meeting-place-860"></use>
+                            {% else %}
+                                <use xlink:href="#delete-place-858"></use>
+                            {% endif %}
+                        </svg>
+                        <div class="ms-3 overflow-hidden">
+                            <h5 class="card-text mb-0">{{ activity.code }}</h5>
+                            <p class="card-text text-uppercase text-muted text-sm">{{ activity.name }}</p>
+                        </div>
+                    </div>
+                    <div class="col table-responsive-sm">
+                        <table class="table table-sm table-striped text-center">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>Base</th>
+                                <th>Test</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>Passed</th>
+                                <td>{{ activity.project.code_base_result.get_result.passed }}</td>
+                                <td>{{ activity.project.code_test_result.get_result.passed }}</td>
+                            </tr>
+                            <tr>
+                                <th>Failed</th>
+                                <td>{{ activity.project.code_base_result.get_result.failed }}</td>
+                                <td>{{ activity.project.code_test_result.get_result.failed }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% if activity.project.error %}
+            <div class="card-footer bg-white">
+                <div class="text-muted">{{ activity.project.error }}</div>
+            </div>
+        {% endif %}
+    </div>
+</div>

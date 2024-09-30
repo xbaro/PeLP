@@ -1,0 +1,26 @@
+{% load static %}
+{% load i18n %}
+
+{% get_current_language as LANGUAGE_CODE %}
+<table id="submissions" class="table table-striped table-bordered" style="width:100%"
+           data-pelp-course-id="{{ activity.course.id }}"
+           data-pelp-activity-id="{{ activity.id }}"
+           data-server-side="true"
+           data-processing="true"
+           data-page-length="3"
+           data-ajax="/api/course/{{ activity.course.id }}/activity/{{ activity.id }}/project/submissions/?format=datatables"
+           data-language-url="{% static 'datatables/'|add:LANGUAGE_CODE|add:'.json' %}"
+>
+    <thead>
+        <tr>
+            <th data-data="id">{% trans "Id" %}</th>
+            <th data-data="status">{% trans "Status" %}</th>
+            <th data-data="built">{% trans "Compiled" %}</th>
+            <th data-data="num_test_passed">#{% trans "Passed" %}</th>
+            <th data-data="num_test_failed">#{% trans "Failed" %}</th>
+            <th data-data="elapsed_time">{% trans "Time" %} (ms)</th>
+            <th data-data="submitted_at">{% trans "Submitted" %}</th>
+            <th data-data="submission"></th>
+        </tr>
+    </thead>
+</table>

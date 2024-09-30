@@ -1,0 +1,153 @@
+{% load i18n %}
+{% load widget_tweaks %}
+<form method="post" id="form_project" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for hidden in form_project.hidden_fields %}
+        {{ hidden }}
+    {% endfor %}
+    <input type="hidden" name="id" id="id" value="{% if activity %}{% if activity.project %}{{ activity.project.id }}{% else %}-1{% endif %}{% endif %}">
+    <div class="row">
+        <div class="col-12">
+            <div class="row mb-3">
+                <div class="col-auto">
+                    <label class="form-label" for="{{ form_project.type.id_for_label }}">{% trans "Type" %}</label>
+                    {{ form_project.type|add_class:"form-select"|attr:"aria-describedby:typeHelper" }}
+                    <div id="typeHelper" class="form-text">{% trans "Select the type of project" %}</div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-auto">
+                    <label class="form-label" for="{{ form_project.executable_name.id_for_label }}">{% trans "Executable name" %}</label>
+                    {{ form_project.executable_name|add_class:"form-control"|attr:"aria-describedby:executable_nameHelper" }}
+                    <div id="executable_nameHelper" class="form-text">{% trans "Name of the executable to build" %}</div>
+                </div>
+                <div class="col-auto">
+                    <label class="form-label" for="{{ form_project.anchor_file.id_for_label }}">{% trans "Anchor file" %}</label>
+                    {{ form_project.anchor_file|add_class:"form-control"|attr:"aria-describedby:anchor_fileHelper" }}
+                    <div id="anchor_fileHelper" class="form-text">{% trans "File used to align submissions file structure with the base code. It must exist." %}</div>
+                </div>
+                <div class="col-auto">
+                    <label class="form-label" for="{{ form_project.allowed_files_regex.id_for_label }}">{% trans "Allowed files" %}</label>
+                    <div class="row mb-1">
+                        <div class="col-auto ms-3">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="acceptedFilesOpt" id="acceptedFilesOpt_c_h" value="files_c_h" checked>
+                                <label class="form-check-label" for="acceptedFilesOpt_c_h"><pre>*.h, *.c</pre></label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="acceptedFilesOpt" id="acceptedFilesOpt_c_h_readme" value="files_c_h_readme">
+                                <label class="form-check-label" for="acceptedFilesOpt_c_h_readme"><pre>*.h, *.c, README.txt</pre></label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="acceptedFilesOpt" id="acceptedFilesOpt_custom" value="custom">
+                                <label class="form-check-label" for="acceptedFilesOpt_custom"><pre>{% trans "Custom" %}</pre></label>
+                            </div>
+                        </div>
+                    </div>
+                    {{ form_project.allowed_files_regex|add_class:"form-control"|attr:"aria-describedby:allowed_files_regexHelper" }}
+                    <div id="allowed_files_regexHelper" class="form-text">{% trans "Regular expression for files allowed in submissions." %}</div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-auto">
+                    <label class="form-label" for="{{ form_project.image.id_for_label }}">{% trans "Docker Image" %}</label>
+                    {{ form_project.image|add_class:"form-control"|attr:"aria-describedby:imageHelper" }}
+                    <div id="imageHelper" class="form-text">{% trans "Docker image used to run the tests" %}</div>
+                </div>
+                <div class="col-auto">
+                    <label class="form-label" for="{{ form_project.test_arguments.id_for_label }}">{% trans "Test arguments" %}</label>
+                    {{ form_project.test_arguments|add_class:"form-control"|attr:"aria-describedby:test_argumentsHelper" }}
+                    <div id="test_argumentsHelper" class="form-text">{% trans "Arguments provided to the executable to run the tests." %}</div>
+                </div>
+                <div class="col-auto">
+                    <label class="form-label" for="{{ form_project.results_path.id_for_label }}">{% trans "Results file path" %}</label>
+                    {{ form_project.results_path|add_class:"form-control"|attr:"aria-describedby:results_pathHelper" }}
+                    <div id="results_pathHelper" class="form-text">{% trans "Path to the file with the final test results." %}</div>
+                </div>
+                <div class="col-auto">
+                    <label class="form-label" for="{{ form_project.progress_path.id_for_label }}">{% trans "Progress file path" %}</label>
+                    {{ form_project.progress_path|add_class:"form-control"|attr:"aria-describedby:progress_pathHelper" }}
+                    <div id="progress_pathHelper" class="form-text">{% trans "Path to the file with test progress. It is used in case of execution error during testing." %}</div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-auto">
+                    <label class="form-label" for="{{ form_project.max_execution_time.id_for_label }}">{% trans "Time limit" %}</label>
+                    {{ form_project.max_execution_time|add_class:"form-control"|attr:"aria-describedby:max_execution_timeHelper" }}
+                    <div id="max_execution_timeHelper" class="form-text">{% trans "Maximum time in seconds before stop test execution" %}</div>
+                </div>
+                <div class="col-auto">
+                    <label class="form-label" for="{{ form_project.mem_limit.id_for_label }}">{% trans "Memory limit" %}</label>
+                    {{ form_project.mem_limit|add_class:"form-control"|attr:"aria-describedby:test_argumentsHelper" }}
+                    <div id="mem_limitHelper" class="form-text">{% trans "Limit of memory for test execution." %}</div>
+                </div>
+            </div>
+             <div class="row mb-3">
+                <div class="col-auto form-check">
+                    {{ form_project.use_valgrind|add_class:"form-check-input valgrind-selector"|attr:"aria-describedby:use_valgrindHelper" }}
+                    <label class="form-label" for="{{ form_project.use_valgrind.id_for_label }}">{% trans "Use Valgrind" %}</label>
+                    <div id="use_valgrindHelper" class="form-text">{% trans "Use Valgrind for memory analysis." %}</div>
+                </div>
+                <div class="col-auto">
+                    <label class="form-label" for="{{ form_project.valgrind_report_path.id_for_label }}">{% trans "Report path" %}</label>
+                    {{ form_project.valgrind_report_path|add_class:"form-control"|attr:"aria-describedby:valgrind_report_pathHelper"|attr:"disabled" }}
+                    <div id="valgrind_report_pathHelper" class="form-text">{% trans "Path where Valgrind report is stored." %}</div>
+                </div>
+            </div>
+            <div class="row mb-1">
+                <div class="col-auto ms-3">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="codeSource" id="codeSource_files" value="files" checked>
+                        <label class="form-check-label" for="codeSource_files">{% trans "From ZIP files" %}</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="codeSource" id="codeSource_repo" value="repository" disabled>
+                        <label class="form-check-label" for="codeSource_repo">{% trans "From GIT repository" %}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-auto ms-3">
+                    <div class="col-auto">
+                        <label class="form-label" for="{{ form_project.code_base_zip.id_for_label }}">{% trans "Base code" %}</label>
+                        {{ form_project.code_base_zip|add_class:"form-control"|attr:"aria-describedby:code_base_zipHelper" }}
+                        <div id="code_base_zipHelper" class="form-text">{% trans "ZIP file with the base code." %}</div>
+                    </div>
+                    <div class="col-auto">
+                        <label class="form-label" for="{{ form_project.code_test_zip.id_for_label }}">{% trans "Test code" %}</label>
+                        {{ form_project.code_test_zip|add_class:"form-control"|attr:"aria-describedby:code_test_zipHelper" }}
+                        <div id="code_test_zipHelper" class="form-text">{% trans "ZIP file with the solution." %}</div>
+                    </div>
+                </div>
+                <div class="col-auto ms-3" style="display: none;">
+                    <div class="col-auto">
+                        <label class="form-label" for="{{ form_project.repository_url.id_for_label }}">{% trans "GIT repository" %}</label>
+                        {{ form_project.repository_url|add_class:"form-control"|attr:"aria-describedby:repository_urlHelper" }}
+                        <div id="repository_urlHelper" class="form-text">{% trans "URL to the GIT repository." %}</div>
+                    </div>
+                    <div class="col-auto">
+                        <label class="form-label" for="{{ form_project.repository_base_branch.id_for_label }}">{% trans "Test code" %}</label>
+                        {{ form_project.repository_base_branch|add_class:"form-control"|attr:"aria-describedby:repository_base_branchHelper" }}
+                        <div id="repository_base_branchHelper" class="form-text">{% trans "Name of the branch with the base code." %}</div>
+                    </div>
+                    <div class="col-auto">
+                        <label class="form-label" for="{{ form_project.repository_test_branch.id_for_label }}">{% trans "Test code" %}</label>
+                        {{ form_project.repository_test_branch|add_class:"form-control"|attr:"aria-describedby:repository_test_branchHelper" }}
+                        <div id="repository_test_branchHelper" class="form-text">{% trans "Name of the branch with the solution code." %}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-auto form-check">
+                    {{ form_project.allow_base_failure|add_class:"form-check-input" }}
+                    <label class="form-label" for="{{ form_project.allow_base_failure.id_for_label }}">{% trans "Allow base project to fail" %}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="col-12 text-center">
+    <a class="save-changes persistence-button btn btn-success mb-3 mr-1 disabled" role="button" id="btn_save_project">
+        <i class="fa fa-save"></i> {% trans "Save changes" %}
+    </a>
+</div>

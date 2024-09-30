@@ -1,0 +1,51 @@
+{% load static %}
+{% load i18n %}
+<div class="summary-h">
+    <ul>
+        <li>
+            <span class="summary-icon">
+                <svg class="svg-icon svg-icon-lg svg-icon-heavy me-xl-2">
+                    <use xlink:href="#read-3126"><title>{% trans "Learners" %}</title></use>
+                </svg>
+            </span>
+            <span class="count">{{ course.learners.count }}</span>
+            <span class="summary-title">{% trans "Learners" %}</span>
+        </li>
+        <li>
+            <span class="summary-icon">
+                <svg class="svg-icon svg-icon-lg svg-icon-heavy me-xl-2">
+                    <use xlink:href="#student-3070"><title>{% trans "Instructors" %}</title></use>
+                </svg>
+            </span>
+            <span class="count">{{ course.instructors.count }}</span>
+            <span class="summary-title">{% trans "Instructors" %}</span>
+        </li>
+        <li>
+            <span class="summary-icon">
+                <svg class="svg-icon svg-icon-lg svg-icon-heavy me-xl-2">
+                    <use xlink:href="#social-3088"><title>{% trans "Groups" %}</title></use>
+                </svg>
+            </span>
+            <span class="count">{{ course.coursegroup_set.count }}</span>
+            <span class="summary-title">{% trans "Groups" %}</span>
+        </li>
+        <li>
+            <span class="summary-icon">
+                <svg class="svg-icon svg-icon-lg svg-icon-heavy me-xl-2">
+                    <use xlink:href="#check-in-place-859"><title>{% trans "Valid activities" %}</title></use>
+                </svg>
+            </span>
+            <span class="count">{{ course.valid_activities.count }}</span>
+            <span class="summary-title">{% trans "Valid activities" %}</span>
+        </li>
+        <li>
+            <span class="summary-icon">
+                <svg class="svg-icon svg-icon-lg svg-icon-heavy me-xl-2">
+                    <use xlink:href="#delete-place-858"><title>{% trans "Not valid activities" %}</title></use>
+                </svg>
+            </span>
+            <span class="count">{{ course.not_valid_activities.count }}</span>
+            <span class="summary-title">{% trans "Not valid activities" %}</span>
+        </li>
+    </ul>
+</div>

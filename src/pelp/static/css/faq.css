@@ -1,0 +1,65 @@
+ .faq-excerpt {
+	max-height: 300px;
+    overflow: hidden;
+	width: 100%;
+}
+
+.faq-excerpt .card-header {
+	background-color: #f6f3fd;
+}
+
+/* FAQ */
+.faq-item {
+  padding: 9px;
+  margin-bottom: 2px;
+  background: #f6f3fd;
+}
+.faq-question {
+  font-size: 18px;
+  font-weight: 600;
+  color: #a99bff;
+  display: block;
+}
+.faq-question:hover {
+  color: #7a6bf1;
+}
+.faq-answer {
+  margin-top: 10px;
+  background: #f3f3f4;
+  border: 1px solid #e7eaec;
+  border-radius: 3px;
+  padding: 15px;
+}
+.faq-item .tag-item {
+  background: #f3f3f4;
+  padding: 2px 6px;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+/* WRAPPERS */
+#wrapper {
+  width: 100%;
+  overflow-x: hidden;
+}
+.wrapper {
+  padding: 0 20px;
+}
+.wrapper-content {
+  padding: 20px 10px 40px;
+}
+#page-wrapper {
+  padding: 0 15px;
+  min-height: 568px;
+  position: relative !important;
+}
+@media (min-width: 768px) {
+  #page-wrapper {
+    position: inherit;
+    margin: 0 0 0 240px;
+    min-height: 2002px;
+  }
+}
+ .rating-xxs {
+    font-size: 12px;
+}
