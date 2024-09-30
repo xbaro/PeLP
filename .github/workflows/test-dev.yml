@@ -41,9 +41,9 @@ jobs:
       MINIO_SECRET_KEY: minioadmin
       DB_ENGINE: mysql
       DB_HOST: 127.0.0.1
-      DB_NAME: '$MYSQL_DATABASE'
-      DB_USER: '$MYSQL_USER'
-      DB_PASSWORD: '$MYSQL_PASSWORD'
+      DB_NAME: pelp
+      DB_USER: pelp
+      DB_PASSWORD: pelp-password
       DB_PORT: 3306
       REDIS_HOST: 127.0.0.1
       REDIS_PORT: 6379
