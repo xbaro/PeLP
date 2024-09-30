@@ -58,7 +58,12 @@ jobs:
       db:        
         image: mariadb        
         ports:          
-          - 3306:3306        
+          - 3306:3306    
+        env:
+          MYSQL_ROOT_PASSWORD: '.pelp-password'
+          MYSQL_DATABASE: pelp
+          MYSQL_USER: pelp
+          MYSQL_PASSWORD: pelp-password    
         options: >-
           --health-cmd "/usr/local/bin/healthcheck.sh --su=mysql --connect --innodb_initialized"
           --health-interval 5s
