@@ -1,0 +1,165 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block page_extra_css %}
+    <!-- Simple DataTables CSS-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
+{% endblock %}
+
+{% block page_head_scripts %}
+{% endblock %}
+
+{% block content %}
+    <!-- CSS Spinner-->
+    <section class="project-statistics">
+        <div class="container-fluid">
+            <div id='spinner' style="min-height: 300px; padding-top: 150px;">
+                <div class="spinner sk-fading-circle">
+                    <div class="sk-circle1 sk-circle"></div>
+                    <div class="sk-circle2 sk-circle"></div>
+                    <div class="sk-circle3 sk-circle"></div>
+                    <div class="sk-circle4 sk-circle"></div>
+                    <div class="sk-circle5 sk-circle"></div>
+                    <div class="sk-circle6 sk-circle"></div>
+                    <div class="sk-circle7 sk-circle"></div>
+                    <div class="sk-circle8 sk-circle"></div>
+                    <div class="sk-circle9 sk-circle"></div>
+                    <div class="sk-circle10 sk-circle"></div>
+                    <div class="sk-circle11 sk-circle"></div>
+                    <div class="sk-circle12 sk-circle"></div>
+                </div>
+            </div>
+
+            <div id="plots" class="row gy-4 align-items-stretch" style="visibility: hidden">
+                <div class="col-lg-6">
+                    <div class="card mb-0">
+                        <div class="card-header d-flex align-items-center">
+                            <h3 class="h4 mb-0">{% trans "Qualification" %}</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-10 mx-auto">
+                                    <canvas id="qualification_canvas"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card mb-0">
+                        <div class="card-header d-flex align-items-center">
+                            <h3 class="h4 mb-0">{% trans "Score" %}</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-10 mx-auto">
+                                    <canvas id="score_summary_canvas"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card mb-0">
+                        <div class="card-header d-flex align-items-center">
+                            <h3 class="h4 mb-0">{% trans "Test Results" %}</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-10 mx-auto">
+                                    <canvas id="results_canvas"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card mb-0">
+                        <div class="card-header d-flex align-items-center">
+                            <h3 class="h4 mb-0">{% trans "Final Scores" %}</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-10 mx-auto">
+                                    <canvas id="scores_canvas"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card mb-0">
+                        <div class="card-header d-flex align-items-center">
+                            <h3 class="h4 mb-0">{% trans "Submissions per day" %}</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-10 mx-auto">
+                                    <canvas id="submission_day_canvas"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card mb-0">
+                        <div class="card-header d-flex align-items-center">
+                            <h3 class="h4 mb-0">{% trans "Submission time" %}</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-10 mx-auto" id="submission_time_canvas_container">
+                                    <canvas id="submission_time_canvas"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card mb-0">
+                        <div class="card-header d-flex align-items-center">
+                            <h3 class="h4 mb-0">{% trans "Submissions by status" %}</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div id="submission_canvas_container" data-ref="submission_time_canvas_container">
+                                    <canvas id="submissions_canvas"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card mb-0">
+                        <div class="card-header d-flex align-items-center">
+                            <h3 class="h4 mb-0">{% trans "Submission final status" %}</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-10 mx-auto">
+                                    <canvas id="final_result_canvas"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block page_body_scripts %}
+    <!-- JQuery -->
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js" integrity="sha256-Y26AMvaIfrZ1EQU49pf6H4QzVTrOI8m9wQYKkftBt4s=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@^2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@^1"></script>
+    <script src="{% static 'js/statistic_plots.js' %}"></script>
+    <input type="hidden" name="activity_results_activity_id" value="{{ activity.id }}">
+    <input type="hidden" name="activity_results_course_id" value="{{ activity.course.id }}">
+    <script src="{% static 'js/pages/activity-statistics.js' %}"></script>
+{% endblock %}

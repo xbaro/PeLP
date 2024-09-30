@@ -1,0 +1,71 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block page_extra_css %}
+    <!-- Simple DataTables CSS-->
+    <link rel="stylesheet" href="{% static 'vendor/simple-datatables/style.css' %}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.1.2/css/star-rating.min.css" media="all" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.1.2/themes/krajee-svg/theme.css" media="all" type="text/css" />
+{% endblock %}
+
+{% block page_extra_css_final %}
+    <link rel="stylesheet" href="{% static 'css/faq.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/star-rating.css' %}"/>
+{% endblock %}
+
+
+{% block page_head_scripts %}
+{% endblock %}
+
+{% block content %}
+    <section class="activity main-container">
+        <div class="container-fluid">
+            {% if faq %}
+                {% include "web/pages/elements/faq_view.html" %}
+            {% else %}
+                {% include "web/pages/elements/faq_search.html" %}
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}
+
+{% block page_toasts %}
+
+{% endblock %}
+
+{% block page_body_scripts %}
+    <!-- JQuery -->
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.6.0/jszip-2.5.0/dt-1.11.3/af-2.3.7/b-2.0.1/b-colvis-2.0.1/b-html5-2.0.1/b-print-2.0.1/date-1.1.1/fc-4.0.1/fh-3.2.0/r-2.2.9/rg-1.1.4/sc-2.0.5/sb-1.3.0/sp-1.4.0/sl-1.3.3/datatables.min.js"></script>
+    <script src="{% static 'vendor/DataTables/Editor-2.0.5/js/dataTables.editor.js' %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.full.min.js" integrity="sha512-RtZU3AyMVArmHLiW0suEZ9McadTdegwbgtiQl5Qqo9kunkVg1ofwueXD8/8wv3Af8jkME3DDe3yLfR8HSJfT2g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/wordcloud@1.2.2/src/wordcloud2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.1.2/js/star-rating.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.1.2/themes/krajee-svg/theme.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.1.2/themes/krajee-fas/theme.js"></script>
+    {{ form_search.media.js }}
+    <script type="text/javascript">
+    {% if faq %}
+        const tags_list = [];
+    {% else %}
+        const tags_list = {{ tags_list|safe }};
+    {% endif %}
+    </script>
+    {% csrf_token %}
+    <script src="{% static 'js/pages/faq.js' %}"></script>
+{% endblock %}

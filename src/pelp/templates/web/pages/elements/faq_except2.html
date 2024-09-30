@@ -1,0 +1,39 @@
+{% load i18n %}
+{% load static %}
+{% load web_utils %}
+{% get_current_language as LANGUAGE_CODE %}
+<div class="faq-item">
+    <div class="row">
+        <div class="col-md-7">
+            <a data-toggle="collapse" href="/faq/{{ faq.faq.id }}/?language={{ faq.language }}" class="faq-question">{% if not faq.faq.public %}<strong>[{% trans "Draft" %}]</strong> {% endif %}{{ faq.title }}</a>
+            <small>
+                <div class="tag-list">
+                    {% for tag in faq.faq.tags.all %}
+                        <span class="badge rounded-pill bg-primary">{{ tag|trans_tag:faq.language }}</span>
+                    {% endfor %}
+                </div>
+            </small>
+        </div>
+        <div class="col-md-3">
+            <span class="small font-bold">
+                {% for lang in faq.faq.available_languages %}
+                    <i class="lang-icons">
+                        {% with "img/lang-flag/"|add:lang|add:".png" as flag_url %}
+                            <img src="{% static flag_url %}" width="16" height="11" alt="language">
+                        {% endwith %}
+                    </i>
+                {% endfor %}
+            </span>
+        </div>
+
+        <div class="col-md-2 text-right">
+            <input id="faq-rating-{{ faq.faq.id }}" value="{{ faq.faq.average_rate|safe }}" type="text"
+                   data-theme="krajee-fas"
+                   class="rating" data-min=0 data-max=5 data-step=0.5 data-size="xxs"
+                   data-display-only=true
+                   data-show-caption=false
+                   data-faq-id="{{ faq.faq.id }}"
+            >
+        </div>
+    </div>
+</div>

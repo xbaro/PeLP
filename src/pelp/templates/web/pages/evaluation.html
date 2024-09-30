@@ -1,0 +1,58 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% load web_utils %}
+
+{% block page_extra_css %}
+    <!-- Simple DataTables CSS-->
+    <link rel="stylesheet" href="{% static 'vendor/simple-datatables/style.css' %}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css"/>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.2.0/dist/select2-bootstrap-5-theme.min.css"/>
+{% endblock %}
+
+{% block content %}
+    <section class="dashboard">
+        <div class="container-fluid">
+            <div class="row-cols-1">
+                <div class="col-lg-auto">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="h4 mb-0">{{ activity.course.code }} / {{ activity.code }}</h3>
+                            <div class="row justify-content-between mt-2">
+                                <div class="col-5">
+                                    <strong>Start:</strong> {{ activity.start }}<br>
+                                    <strong>End:</strong> {{ activity.end }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row" data-masonry="{&quot;percentPosition&quot;: true }">
+                                {% for group in activity.course.coursegroup_set.all %}
+                                    {% if group|is_instructor:request.user or request.user.is_staff %}
+                                        {% include "web/pages/elements/group-card.html" with activity=activity group=group %}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block page_body_scripts %}
+    <!-- JQuery -->
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
+
+    <script src="{% static 'js/pages/evaluation.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% load i18n %}
+{% load widget_tweaks %}
+<form method="post">
+    {% csrf_token %}
+    {% for hidden in feedback_form.hidden_fields %}
+        {{ hidden }}
+    {% endfor %}
+    <div class="row">
+        <div class="col-6">
+            <div class="mb-3 mt-3 form-check form-switch">
+                {{ feedback_form.public|add_class:"form-check-input" }}
+                <label class="form-label" for="{{ feedback_form.public.id_for_label }}">{% trans "Make public" %}</label>
+            </div>
+            <div class="row mb-3">
+                <div class="col-auto">
+                    <label class="form-label" for="{{ feedback_form.score.id_for_label }}">{% trans "Final Score" %}</label>
+                    <div class="input-group" id="final-score">
+                        <div class="input-group-text">
+                            <div class="form-check form-switch">
+                                <label class="form-label" for="{{ feedback_form.is_np.id_for_label }}">NP</label>
+                                {{ feedback_form.is_np|add_class:"form-check-input" }}
+                            </div>
+                        </div>
+                        {{ feedback_form.score|add_class:"form-control" }}
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="qualitative-score" style="font-weight: bold; height: 100%;">-</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto align-bottom">
+                    <label class="form-label" for="computed_score_group"></label>
+                    <div id="computed_score_group" class="input-group input-group-sm">
+                        <label class="input-group-text" for="btn_set_computed_score"><strong>{% trans "Computed" %}:</strong> <span id="computed_score" class="ms-2">0</span></label>
+                        <button class="btn btn-primary" type="button" id="btn_set_computed_score">{% trans "Set" %}</button>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div id="feedback-alert" class="alert alert-warning test-muted" role="alert" style="display: none;border-radius: 15px;">
+                    {% trans "Feedback is mandatory for qualifications in range C-/C+" %}
+                </div>
+                <label class="form-label" for="{{ feedback_form.general.id_for_label }}">{% trans "Feedback" %}</label><br>
+                {{ feedback_form.general|add_class:"form-control" }}
+            </div>
+        </div>
+        <div class="col-6">
+            {% for rubric_element in feedback_form.get_rubric_fields %}
+                <label class="form-label" for="{{ rubric_element.id_for_label }}">{{ rubric_element.label }}</label>
+                {{ rubric_element|add_class:"form-select col-12 h-auto rubric_option" }}
+            {% endfor %}
+        </div>
+    </div>
+</form>

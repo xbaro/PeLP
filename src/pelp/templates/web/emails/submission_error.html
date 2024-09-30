@@ -1,0 +1,12 @@
+{% load web_utils %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+<h1><strong>Status:</strong> {{ mail.get_status_display }}</h1>
+{% if mail.error %}
+    <h2><strong>Error:</strong> {{ mail.error|safe }}</h2>
+{% endif %}
+</body>
+</html>

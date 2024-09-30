@@ -1,0 +1,123 @@
+{% load i18n %}
+<div class="accordion m-3" id="project_status_info">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <div class="container d-flex justify-content-center align-items-center">
+                    <div class="progress-steps">
+                        <div class="progress-steps-step" id="step-prepare">
+                            <span class="font-weight-bold">?</span>
+                        </div>
+                        <span class="progress-steps-line" id="line-prepare-valid"></span>
+                        <div class="progress-steps-step" id="step-valid">
+                            <span class="font-weight-bold">?</span>
+                        </div>
+                        <span class="progress-steps-line" id="line-valid-tested"></span>
+                        <div class="progress-steps-step" id="step-tested">
+                            <span class="font-weight-bold">?</span>
+                        </div>
+                        <span class="progress-steps-line" id="line-tested-ready"></span>
+                        <div class="progress-steps-step" id="step-ready">
+                            <span class="font-weight-bold">?</span>
+                        </div>
+                    </div>
+                </div>
+            </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#project_status_info">
+            <div class="accordion-body">
+                <div id="project_status_messages" class="text-justify text-muted">
+                    <p id='msg_invalid_project'>
+                        {% blocktranslate trimmed %}
+                            Fill all required information for the <strong>activity</strong> and the code <strong>project</strong>.
+                            If the project have modules such as libraries, define them in the <strong>modules</strong> step.
+                            Finally, <strong>validate the project</strong>.
+                            During the validation process, the <strong>base code</strong> is executed in the test scenario.
+                        {% endblocktranslate %}
+                    </p>
+                    <p id='msg_testing_project'>
+                        {% blocktranslate trimmed %}
+                            The <strong>test code</strong> fails to pass all tests. Check the <strong>files</strong>
+                            to ensure that all files that can be replaced by learners submissions are unlocked.
+                            Finally, <strong>test the project</strong> again.
+                        {% endblocktranslate %}
+                    </p>
+                    <p id='msg_not_ready_project'>
+                        {% blocktranslate trimmed %}
+                            The <strong>test code</strong> pass all tests, and therefore the activity is ready
+                            to receive and evaluate learners' submissions. However, <strong>total score</strong>
+                            for this activity is different to 100. If this is not the expected value, modify the
+                            <strong>weights</strong> of tests to adjust the final score.
+                        {% endblocktranslate %}
+                    </p>
+                    <p id='msg_project_ready'>
+                        {% blocktranslate trimmed %}
+                            The activity is ready to receive and evaluate learners' submissions.
+                        {% endblocktranslate %}
+                    </p>
+                </div>
+                <div id="project_status" style="display:none;"></div>
+                <div class="mt-2 btn-group-sm container d-flex justify-content-center align-items-center">
+                    <button class="btn btn-sm btn-light" id="btn_validate">{% trans "Validate Project" %}</button>
+                    <button class="btn btn-sm btn-light ms-1" id="btn_test">{% trans "Test Project" %}</button>
+                </div>
+                {% include "web/pages/elements/config/project_submissions.html" %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card bs-stepper">
+    <div class="card-header bs-stepper-header" role="tablist">
+        <div class="step" data-target="#activity-data-step">
+            <button type="button" class="step-trigger" role="tab" aria-controls="activity-data-step" id="activity-data-step-trigger">
+                <span class="bs-stepper-circle">1</span>
+                <span class="bs-stepper-label">{% trans "Activity" %}</span>
+            </button>
+        </div>
+        <div class="line"></div>
+        <div class="step" data-target="#project-data-step">
+            <button type="button" class="step-trigger" role="tab" aria-controls="project-data-step" id="project-data-step-trigger">
+                <span class="bs-stepper-circle">2</span>
+                <span class="bs-stepper-label">{% trans "Project" %}</span>
+            </button>
+        </div>
+        <div class="line"></div>
+        <div class="step" data-target="#project-modules-step">
+            <button type="button" class="step-trigger" role="tab" aria-controls="project-modules-step" id="project-modules-step-trigger">
+                <span class="bs-stepper-circle">3</span>
+                <span class="bs-stepper-label">{% trans "Modules" %}</span>
+            </button>
+        </div>
+        <div class="line"></div>
+        <div class="step" data-target="#project-files-step">
+            <button type="button" class="step-trigger" role="tab" aria-controls="project-files-step" id="project-files-step-trigger">
+                <span class="bs-stepper-circle">4</span>
+                <span class="bs-stepper-label">{% trans "Files" %}</span>
+            </button>
+        </div>
+        <div class="line"></div>
+        <div class="step" data-target="#project-weights-step">
+            <button type="button" class="step-trigger" role="tab" aria-controls="project-weights-step" id="project-weights-step-trigger">
+                <span class="bs-stepper-circle">5</span>
+                <span class="bs-stepper-label">{% trans "Weights" %}</span>
+            </button>
+        </div>
+    </div>
+    <div class="card-body bs-stepper-content">
+        <div id="activity-data-step" class="content mt-3" role="tabpanel" aria-labelledby="activity-data-step-trigger">
+            {% include "web/pages/elements/config/activity_form.html" %}
+        </div>
+        <div id="project-data-step" class="content mt-3" role="tabpanel" aria-labelledby="project-data-step-trigger">
+            {% include "web/pages/elements/config/project_form.html" %}
+        </div>
+        <div id="project-modules-step" class="content mt-3" role="tabpanel" aria-labelledby="project-modules-step-trigger">
+            {% include "web/pages/elements/config/project_modules.html" with activity=activity %}
+        </div>
+        <div id="project-files-step" class="content mt-3" role="tabpanel" aria-labelledby="project-files-step-trigger">
+            {% include "web/pages/elements/config/project_files.html" with activity=activity %}
+        </div>
+        <div id="project-weights-step" class="content mt-3" role="tabpanel" aria-labelledby="project-weights-step-trigger">
+            {% include "web/pages/elements/config/project_weights.html" with activity=activity %}
+        </div>
+    </div>
+</div>

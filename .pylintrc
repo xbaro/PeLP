@@ -1,0 +1,23 @@
+[MAIN]
+
+# List of plugins (as comma separated values of python modules names) to load,
+# usually to register additional checkers.
+load-plugins=
+    pylint.extensions.check_elif,
+    pylint.extensions.bad_builtin,
+    pylint.extensions.docparams,
+    pylint.extensions.for_any_all,
+    pylint.extensions.set_membership,
+    pylint.extensions.code_style,
+    pylint.extensions.overlapping_exceptions,
+    pylint.extensions.typing,
+    pylint.extensions.redefined_variable_type,
+    pylint.extensions.comparison_placement,
+    pylint_django,
+
+[CODE_STYLE]
+
+# Max line length for which to sill emit suggestions. Used to prevent optional
+# suggestions which would get split by a code formatter (e.g., black). Will
+# default to the setting for ``max-line-length``.
+max-line-length-suggestions=120

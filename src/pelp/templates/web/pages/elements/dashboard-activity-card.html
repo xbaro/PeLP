@@ -1,0 +1,53 @@
+{% load web_utils %}
+{% load i18n %}
+
+{% get_current_language as LANGUAGE_CODE %}
+<div class="col-md-6 col-xl-4">
+    <div class="card">
+        <div class="card-body px-3 py-4 active-activity-card position-relative">
+            <a class="stretched-link d-flex align-items-center text-reset"
+               href="/course/{{ activity.course.id }}/activity/{{ activity.id }}/">
+                <svg class="svg-icon svg-icon-lg svg-icon-heavy me-xl-2">
+                    <use xlink:href="#reference-book-3493"></use>
+                </svg>
+                <div class="ms-3 overflow-hidden">
+                    <h5 class="card-text mb-0">{{ activity.code }}</h5>
+                    <p class="card-text text-uppercase text-muted text-sm">{{ activity|trans_name:LANGUAGE_CODE }}</p>
+                </div>
+            </a>
+        </div>
+        {% if activity|is_instructor:request.user or request.user.is_staff %}
+            <div class="card-footer activity-actions" style="margin: 0 !important;">
+                <a class="btn-outline-primary" href="{% url 'activity_submissions' activity.course.id activity.id  %}">
+                    <svg class="svg-icon svg-icon-lg svg-icon-heavy me-xl-2">
+                        <use xlink:href="#upload-to-cloud-4630"><title>{% trans "Submissions" %}</title></use>
+                    </svg>
+                </a>
+                <a class="btn-outline-primary" href="{% url 'activity_report' activity.course.id activity.id  %}">
+                    <svg class="svg-icon svg-icon-lg svg-icon-heavy me-xl-2">
+                        <use xlink:href="#search-server-2155"><title>{% trans "Open Report" %}</title></use>
+                    </svg>
+                </a>
+                <a class="btn-outline-primary" href="{% url 'activity_statistics' activity.course.id activity.id  %}">
+                    <svg class="svg-icon svg-icon-lg svg-icon-heavy me-xl-2">
+                        <use xlink:href="#pie-chart-2693"><title>{% trans "Show statistics" %}</title></use>
+                    </svg>
+                </a>
+                {% if not activity.self_evaluation %}
+                <a class="btn-outline-primary" href="{% url 'activity_evaluation' activity.course.id activity.id  %}">
+                    <svg class="svg-icon svg-icon-lg svg-icon-heavy me-xl-2">
+                        <use xlink:href="#stars-3158"><title>{% trans "Evaluation" %}</title></use>
+                    </svg>
+                </a>
+                {% endif %}
+                {% if not activity.has_submissions or request.user.is_staff %}
+                    <a class="btn-outline-primary" href="{% url 'activity_configuration' activity.course.id activity.id  %}">
+                        <svg class="svg-icon svg-icon-lg svg-icon-heavy me-xl-2">
+                            <use xlink:href="#settings-server-2156"><title>{% trans "Configuration" %}</title></use>
+                        </svg>
+                    </a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</div>

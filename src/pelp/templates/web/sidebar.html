@@ -1,0 +1,66 @@
+{% load static %}
+{% load i18n %}
+{% load web_utils %}
+
+<!-- Side Navbar -->
+<nav class="side-navbar z-index-40">
+    <!-- Sidebar Header-->
+    {% if user.is_authenticated %}
+        <div class="sidebar-header d-flex align-items-center py-4 px-3">
+            <a class="d-inline-block" href="pages-profile.html">
+                {% if user.profile.picture %}
+                    <img class="avatar shadow-0 img-fluid rounded-circle" src="{{ user.profile.picture.url }}" alt="user picture">
+                {% else %}
+                    <img class="avatar shadow-0 img-fluid rounded-circle" src="{% static 'img/no-picture.png' %}" alt="user picture">
+                {% endif %}
+            </a>
+        {{ course_user_role }}
+            <div class="ms-3 title">
+                <h1 class="h4 mb-2">{{ user.first_name }} {{ user.last_name }}</h1>
+                <p class="text-sm text-gray-500 fw-light mb-0 lh-1">
+                    {% course_user_role %}
+                </p>
+            </div>
+        </div>
+        <!-- Sidebar Navidation Menus-->
+        <!--<span
+            class="text-uppercase text-gray-400 text-xs letter-spacing-0 mx-3 px-2 heading">Main</span>-->
+        <ul class="list-unstyled py-4">
+            <li class="sidebar-item {% if active_menu|lower == 'dashboard' %}active{% endif %}">
+                <a class="sidebar-link" href="/">
+                <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
+                    <use xlink:href="#portfolio-grid-1"><title>{% trans "Dashboard" %}</title></use>
+                </svg>
+                {% trans "Dashboard" %} </a>
+            </li>
+            <li class="sidebar-item {% if active_menu|lower == 'courses' %}active{% endif %}">
+                <a class="sidebar-link" href="/course/">
+                <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
+                    <use xlink:href="#literature-3495"><title>{% trans "Courses" %}</title></use>
+                </svg>
+                {% trans "Courses" %} </a>
+            </li>
+            <li class="sidebar-item {% if active_menu|lower == 'faq' %}active{% endif %}">
+                <a class="sidebar-link" href="/faq/">
+                <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
+                    <use xlink:href="#journalism-3487"><title>{% trans "Frequent Asked Questions" %}</title></use>
+                </svg>
+                {% trans "FAQ" %} </a>
+            </li>
+            {% if user.is_staff %}
+            <li class="sidebar-item"><a class="sidebar-link" href="#tablesDropdown" data-bs-toggle="collapse">
+                <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
+                    <use xlink:href="#configuration-1"><title>{% trans "Administration" %}</title></use>
+                </svg>
+                {% trans "Administration" %} </a>
+                <ul class="collapse list-unstyled {% if active_menu|lower == 'import' %}active{% endif %}" id="tablesDropdown">
+                    <li><a class="sidebar-link" href="/import">{% trans "Import" %}</a></li>
+                </ul>
+                <ul class="collapse list-unstyled" id="tablesDropdown">
+                    <li><a class="sidebar-link" href="/admin">{% trans "Admin" %}</a></li>
+                </ul>
+            </li>
+            {%  endif %}
+        </ul>
+    {% endif %}
+</nav>

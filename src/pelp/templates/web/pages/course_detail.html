@@ -1,0 +1,127 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% load i18n %}
+{% load web_utils %}
+
+{% block page_extra_css %}
+    <!-- Simple DataTables CSS-->
+    <link rel="stylesheet" href="{% static 'vendor/simple-datatables/style.css' %}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
+    <style>
+         .cke
+         {
+            width: 100% !important;
+         }
+    </style>
+{% endblock %}
+
+{% block page_head_scripts %}
+{% endblock %}
+
+{% block content %}
+    <section class="course">
+        <div class="container-fluid">
+            <div class="row-cols-1">
+                <div class="col-lg-auto">
+                    <div class="card">
+                        <div class="card-header">
+                            {% get_current_language as LANGUAGE_CODE %}
+                            <h3 class="h4 mb-0">{{ course.code }} - {{ course|trans_name:LANGUAGE_CODE }}</h3>
+                        </div>
+                        <div class="card-body">
+                            {% if user.is_staff or course|is_instructor:user %}
+                            <div class="row" style="margin-bottom: 5rem;">
+                                {% include 'web/pages/elements/course_statistics_summary.html' %}
+                            </div>
+                            <div class="row">
+                                {% include 'web/pages/elements/course_detail_plots.html' %}
+                            </div>
+                            <div class="row btn-group btn-group-sm m-2" role="group">
+                            {% comment %}
+                                <a class="btn btn-outline-dark col-4" role="button"
+                                   href="/course/{{ course.id }}/learner/">
+                                    <svg class="svg-icon svg-icon-lg svg-icon-heavy me-xl-2">
+                                        <use xlink:href="#profile-settings-3038"><title>{% trans "Manage course's learners" %}</title></use>
+                                    </svg>
+                                    <div class="ms-3 overflow-hidden">
+                                        <h5 class="card-text mb-0">{% trans "Learners" %}</h5>
+                                        <p class="card-text text-muted text-sm">{% trans "Manage Learners" %}</p>
+                                    </div>
+                                </a>
+                                <a class="btn btn-outline-dark col-4 ms-2" role="button"
+                                   href="/course/{{ course.id }}/submissions/">
+                                    <svg class="svg-icon svg-icon-lg svg-icon-heavy me-xl-2">
+                                        <use xlink:href="#upload-archive-4260"><title>{% trans "Manage course's submissions" %}</title></use>
+                                    </svg>
+                                    <div class="ms-3 overflow-hidden">
+                                        <h5 class="card-text mb-0">{% trans "Submissions" %}</h5>
+                                        <p class="card-text text-muted text-sm">{% trans "Manage Submissions" %}</p>
+                                    </div>
+                                </a>
+                                {% endcomment %}
+                            </div>
+                            {% else %}
+                                <div class="row" data-masonry="{&quot;percentPosition&quot;: true }">
+                                    {% for activity in course.activity_set.all %}
+                                        {% include "web/pages/elements/activity-card-learner.html" with course=course activity=activity %}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% if user.is_staff or course|is_instructor:user %}
+            <div class="row" data-masonry="{&quot;percentPosition&quot;: true }">
+                {% for activity in course.activity_set.all %}
+                    {% include "web/pages/elements/dashboard-activity-card.html" with course=course activity=activity %}
+                {% endfor %}
+                <div class="col-md-5 col-xl-4">
+                    <div class="card">
+                        <div class="card-body px-3 py-4">
+                            <a class="stretched-link d-flex align-items-center text-reset activity-add" href="#" data-bs-toggle="modal" data-bs-target="#new_activity_modal">
+                                <svg class="svg-icon svg-icon-lg svg-icon-heavy me-xl-2">
+                                    <use xlink:href="#add-layer-7099"></use>
+                                    <title>{% trans "Add new activity" %}</title>
+                                </svg>
+                                <div class="ms-3 overflow-hidden">
+                                    <h5 class="card-text mb-0">{% trans "New activity" %}</h5>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div id="new_activity_modal" class="modal" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">{% trans "New activity" %}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                {% include "web/pages/elements/config/activity_form.html" %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}
+
+{% block page_body_scripts %}
+    <!-- JQuery -->
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js" integrity="sha256-Y26AMvaIfrZ1EQU49pf6H4QzVTrOI8m9wQYKkftBt4s=" crossorigin="anonymous"></script>
+    <script src="{% static 'js/statistic_plots.js' %}"></script>
+    <input type="hidden" name="course_detail_course_id" value="{{ course.id }}">
+    <script src="{% static 'js/pages/course-detail.js' %}"></script>
+{% endblock %}

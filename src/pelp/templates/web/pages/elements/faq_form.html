@@ -1,0 +1,78 @@
+{% load i18n %}
+{% load widget_tweaks %}
+{% load web_utils %}
+<form method="post" id="form_faq">
+    {% csrf_token %}
+    {% for hidden in form_faq.hidden_fields %}
+        {{ hidden }}
+    {% endfor %}
+    <input type="hidden" name="id" id="id" value="{% if faq %}{{ faq.id }}{% else %}-1{% endif %}">
+    <div class="row">
+        <div class="col-auto">
+            <div class="form-check form-switch">
+                <label class="form-label form-check-label" for="{{ form_faq.public.id_for_label }}">{% trans "Public" %}</label>
+                {{ form_faq.public|add_class:"form-check-input" }}
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="mb-3">
+                <label class="form-label" for="{{ form_faq.tags.id_for_label }}">{% trans "Tags" %}</label>
+                {{ form_faq.tags|add_class:"form-control" }}
+            </div>
+        </div>
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link active" id="nav-{{ form_faq.default_language|list_pos:0 }}-tab" data-bs-toggle="tab"
+                        data-bs-target="#nav-{{ form_faq.default_language|list_pos:0 }}" type="button" role="tab"
+                        aria-controls="nav-{{ form_faq.default_language|list_pos:0 }}" aria-selected="true">
+                    <strong>{{ form_faq.default_language|list_pos:1 }}*</strong>
+                </button>
+                {% for lang in form_faq.additional_languages %}
+                <button class="nav-link" id="nav-{{ lang|list_pos:0 }}-tab" data-bs-toggle="tab"
+                        data-bs-target="#nav-{{ lang|list_pos:0 }}" type="button" role="tab"
+                        aria-controls="nav-{{ lang|list_pos:0 }}" aria-selected="false">
+                    <strong>{{ lang|list_pos:1 }}</strong>
+                </button>
+                {% endfor %}
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent" style="min-height: 50px;">
+            <div class="tab-pane fade show active" id="nav-{{ form_faq.default_language|list_pos:0 }}" role="tabpanel"
+                 aria-labelledby="nav-{{ form_faq.default_language|list_pos:0 }}-tab">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <br class="col">
+                        <label class="form-label" for="{{ form_faq.title.id_for_label }}">{% trans "Title" %}</label>
+                        {{ form_faq.title|add_class:"form-control" }}
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label"
+                           for="{{ form_faq.content.id_for_label }}">{% trans "Content" %}</label><br>
+                    {{ form_faq.content|add_class:"form-control" }}
+                </div>
+            </div>
+            {% for lang in form_faq.additional_languages %}
+                <div class="tab-pane fade" id="nav-{{ lang|list_pos:0 }}" role="tabpanel"
+                aria-labelledby="nav-{{ lang|list_pos:0 }}-tab">
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <br class="col">
+                            <label class="form-label" for="{{ form_faq|lang_form_title_element_id:lang }}">{% trans "Title" %}</label>
+                            {{ form_faq|lang_form_title_element:lang|add_class:"form-control" }}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label"
+                               for="{{ form_faq|lang_form_content_element_id:lang }}">{% trans "Content" %}</label><br>
+                        {{ form_faq|lang_form_content_element:lang|add_class:"form-control" }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="col-12 text-center">
+            <input class="btn btn-success mb-3 mr-1" type="submit" value="Save" name="action_save">
+            <input class="btn btn-info mb-3 mr-1" type="submit" value="Save and View" name="action_save_view">
+        </div>
+    </div>
+</form>

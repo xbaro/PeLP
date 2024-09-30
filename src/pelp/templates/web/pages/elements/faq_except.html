@@ -1,0 +1,33 @@
+{% load i18n %}
+{% load static %}
+{% load web_utils %}
+{% get_current_language as LANGUAGE_CODE %}
+<div class="w-100 position-relative">
+    <a class="stretched-link d-flex align-items-center text-reset" href="/faq/{{ faq.faq.id }}/?language={{ faq.language }}">
+        <div class="card faq-excerpt">
+            <div class="card-header text-muted w-100">
+                <h5 class="card-title">{% if not faq.faq.public %}<strong>[{% trans "Draft" %}]</strong> {% endif %}{{ faq.title }}</h5>
+                <div class="col-12">
+                    {% for tag in faq.faq.tags.all %}
+                        <span class="badge rounded-pill bg-primary">{{ tag|trans_tag:faq.language }}</span>
+                    {% endfor %}
+                </div>
+                <div class="col-12">
+                    {% for lang in faq.faq.available_languages %}
+                        <i class="lang-icons">
+                            {% with "img/lang-flag/"|add:lang|add:".png" as flag_url %}
+                                <img src="{% static flag_url %}" width="16" height="11" alt="language">
+                            {% endwith %}
+                        </i>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="card-body text-muted text-justify">
+                {{ faq.content|safe|striptags|slice:":1000" }}
+            </div>
+            <div class="card-footer text-sm">
+                <strong>{% trans "Last update" %}:</strong> {{ faq.updated_at }}
+            </div>
+        </div>
+    </a>
+</div>

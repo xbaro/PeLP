@@ -1,0 +1,46 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% load i18n %}
+{% load web_utils %}
+
+{% block page_head_scripts %}
+{% endblock %}
+
+{% block content %}
+    <section class="course main-container">
+        <div class="container-fluid">
+            <div class="row-cols-1">
+                <div class="col-lg-auto">
+                    <div class="card">
+                        <div class="card-header">
+                            {% get_current_language as LANGUAGE_CODE %}
+                            <h3 class="h4 mb-0">{{ course.code }} - {{ course|trans_name:LANGUAGE_CODE }}</h3>
+                        </div>
+                        <div class="card-body">
+                            {% block content_extra %}
+
+                            {% endblock %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block page_body_scripts %}
+    <!-- JQuery -->
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
+    {% csrf_token %}
+    <script src="{% static 'js/pages/group_selection.js' %}"></script>
+    {% block page_body_extra_scripts %}
+    {% endblock %}
+{% endblock %}

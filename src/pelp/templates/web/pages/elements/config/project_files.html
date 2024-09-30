@@ -1,0 +1,26 @@
+{% load i18n %}
+{% load static %}
+<div class="col">
+    <p class="text-muted text-justify">
+        {% blocktranslate trimmed %}
+        Unlocked files can be replaced by submissions. Ensure test files remain locked.
+        {% endblocktranslate %}
+    </p>
+</div>
+<div class="table-responsive">
+    <table id="files" class="table table-striped table-bordered" style="width:100%"
+           data-server-side="true"
+           data-ajax="/api/course/{{ activity.course.id }}/activity/{{ activity.id }}/file/?format=datatables"
+           data-language-url="{% static 'datatables/'|add:LANGUAGE_CODE|add:'.json' %}"
+    >
+        <thead>
+        <tr>
+            <th data-data="id">{% trans "Id" %}</th>
+            <th data-data="file">{% trans "File" %}</th>
+            <th data-data="module">{% trans "Module" %}</th>
+            <th data-data="filename">{% trans "Filename" %}</th>
+            <th data-data="locked">{% trans "Locked" %}</th>
+        </tr>
+        </thead>
+    </table>
+</div>

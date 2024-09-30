@@ -1,0 +1,39 @@
+<div class="card">
+    <div class="card-header">
+        <h3 class="h4 mb-0">
+            Tests
+            <svg class="svg-icon svg-icon-lg svg-icon-heavy me-xl-2" id="edit-icon-tests"
+                 style="visibility: hidden">
+                <use xlink:href="#edit-entry-3725"></use>
+            </svg>
+        </h3>
+        <div class="card-close">
+            <div class="dropdown">
+                <button class="dropdown-toggle text-sm" type="button" id="closeCard2"
+                        data-bs-toggle="dropdown" aria-expanded="false"><i
+                        class="fas fa-ellipsis-v"></i></button>
+                <div class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="closeCard2">
+                    <a class="dropdown-item py-1 px-3 edit" href="#">
+                        <i class="fas fa-cog"></i><span id="edit-text-tests">Edit</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="tests" class="table table-striped table-bordered" style="width:100%"
+                   data-server-side="true"
+                   data-ajax="/api/course/{{ activity.course.id }}/activity/{{ activity.id }}/test/?format=datatables">
+                <thead>
+                <tr>
+                    <th data-data="id">Id</th>
+                    <th data-data="code">Name</th>
+                    <th data-data="weight">Weight</th>
+                    <th data-data="parent">Section</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>

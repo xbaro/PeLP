@@ -1,0 +1,120 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% load i18n %}
+{% load web_utils %}
+
+{% block page_extra_css %}
+    <!-- Simple DataTables CSS-->
+    <link rel="stylesheet" href="{% static 'vendor/simple-datatables/style.css' %}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap5.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
+{% endblock %}
+
+{% block page_head_scripts %}
+{% endblock %}
+
+{% block content %}
+    <section class="activity main-container">
+        <div class="container-fluid">
+            <div class="row-cols-1">
+                <div class="col-lg-auto">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="h4 mb-0">
+                                {{ activity.code }} - {{ activity|trans_name }}
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="activity-actions">
+                                <a class="btn-outline-primary" href="{% url 'activity_submissions' activity.course.id activity.id  %}">
+                                    <svg class="svg-icon svg-icon-lg svg-icon-heavy me-xl-2">
+                                        <use xlink:href="#upload-to-cloud-4630"><title>{% trans "Submissions" %}</title></use>
+                                    </svg>
+                                </a>
+                                <a class="btn-outline-primary" href="{% url 'activity_statistics' activity.course.id activity.id  %}">
+                                    <svg class="svg-icon svg-icon-lg svg-icon-heavy me-xl-2">
+                                        <use xlink:href="#pie-chart-2693"><title>{% trans "Show statistics" %}</title></use>
+                                    </svg>
+                                </a>
+                                <a class="btn-outline-primary" href="{% url 'activity_evaluation' activity.course.id activity.id  %}">
+                                    <svg class="svg-icon svg-icon-lg svg-icon-heavy me-xl-2">
+                                        <use xlink:href="#stars-3158"><title>{% trans "Evaluation" %}</title></use>
+                                    </svg>
+                                </a>
+                                {%  if request.user.is_staff or not activity.has_submissions %}
+                                    <a class="btn-outline-primary" href="{% url 'activity_configuration' activity.course.id activity.id  %}">
+                                        <svg class="svg-icon svg-icon-lg svg-icon-heavy me-xl-2">
+                                            <use xlink:href="#settings-server-2156"><title>{% trans "Configuration" %}</title></use>
+                                        </svg>
+                                    </a>
+                                {% endif %}
+                            </div>
+                            <div class="table-responsive mt-3">
+                                <label for="course_group_select" class="align-content-center">{% trans "Group" %}
+                            <select id="course_group_select" class="form-select form-select-sm custom-datatable-select-filter">
+                                    <option value="-1">-- {% trans "All" %} --</option>
+                                    {% for group in activity.course.coursegroup_set.all %}
+                                    <option value="{{ group.id }}">{{ group.code }}</option>
+                                    {% endfor %}
+                                </select>
+                                <a class="btn-outline-primary" id="download-excel" href="/api/course/{{ activity.course.id }}/activity/{{ activity.id }}/report/download/">
+                                    <svg class="svg-icon svg-icon-lg svg-icon-heavy me-xl-2" style="padding-top: 0.4rem;">
+                                        <use xlink:href="#export-server-2151"><title>{% trans "Download Excel file" %}</title></use>
+                                    </svg>
+                                </a>
+                            </label>
+                                {% get_current_language as LANGUAGE_CODE %}
+                                <table id="learners" class="table table-striped table-bordered responsive nowrap" style="width:100%"
+                                       data-server-side="true",
+                                       data-processing="true",
+                                       data-ajax="/api/course/{{ activity.course.id }}/activity/{{ activity.id }}/report/?format=datatables"
+                                       data-language-url="{% static 'datatables/'|add:LANGUAGE_CODE|add:'.json' %}"
+                                >
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th data-data="status">{% trans "Status" %}</th>
+                                        <th data-data="built" data-priority="6">{% trans "Compiled" %}</th>
+                                        <th data-data="test_passed" data-priority="5">{% trans "Passed" %}</th>
+                                        <th data-data="learner.first_name" data-priority="4">{% trans "First Name" %}</th>
+                                        <th data-data="learner.last_name" data-priority="3">{% trans "Last Name" %}</th>
+                                        <th data-data="learner.email">{% trans "Email" %}</th>
+                                        <th data-data="num_test_passed">#{% trans "Passed" %}</th>
+                                        <th data-data="num_test_failed">#{% trans "Failed" %}</th>
+                                        <th data-data="elapsed_time">{% trans "Time" %} (ms)</th>
+                                        <th data-data="num_submissions">{% trans "Submissions" %}</th>
+                                        <th data-data="test_score" data-priority="2">{% trans "Score" %}</th>
+                                        <th data-data="leaked_bytes">{% trans "Leaked Mem" %}</th>
+                                        <th data-data="id">{% trans "Id" %}</th>
+                                        <th data-data="learner.username">{% trans "Username" %}</th>
+                                        <th data-data="last_submission" data-priority="0">{% trans "Last Submission" %}</th>
+                                        <th data-data="submissions"></th>
+                                        <th data-data="status_desc" data-priority="2"></th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block page_body_scripts %}
+    <!-- JQuery -->
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
+    {% csrf_token %}
+    <script src="{% static 'js/pages/activity-report.js' %}"></script>
+{% endblock %}
