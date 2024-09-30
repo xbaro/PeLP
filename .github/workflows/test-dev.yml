@@ -107,7 +107,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name != 'release' && github.event_name != 'pull_request'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4      
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       - name: Store version
@@ -127,7 +127,7 @@ jobs:
           # Build PeLP image
           docker build --pull -t "ghcr.io/xbaro/pelp:${{ github.sha }}" -f docker/Dockerfile .          
           # Set the version
-          echo '${{ steps.vars.outputs.version }}' > VERSION
+          echo '${{ steps.vars.outputs.version }}:${{ github.sha }}' > VERSION
           # Build and publish
           docker build -t "ghcr.io/xbaro/pelp:${{ github.sha }}" -f docker/Dockerfile --build-arg PELP_VERSION=${{ steps.vars.outputs.version }} .
           docker push ghcr.io/xbaro/pelp:${{ github.sha }}

@@ -67,6 +67,14 @@ def get_secret(key, value=None):
     return key_value
 
 
+def get_version():
+    version_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'VERSION')
+    version = None
+    if os.path.exists(version_path):
+        with open(version_path, 'r') as version_file:
+            version = version_file.read().strip()
+    return version
+
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
@@ -432,3 +440,6 @@ if USE_CSP:
 
     # A tuple of URL prefixes. URLs beginning with any of these will not get the CSP headers. ('/admin')
     # CSP_EXCLUDE_URL_PREFIXES = ("http://localhost:63342/", )
+
+
+PELP_VERSION = get_version()

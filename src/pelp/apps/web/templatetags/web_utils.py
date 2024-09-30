@@ -9,6 +9,10 @@ from pelp.apps.web import models
 
 register = template.Library()
 
+@register.simple_tag()
+def pelp_version():
+    return settings.PELP_VERSION or "N/A"
+
 @register.filter(name='increment')
 def increment(value, arg=1):
     return value + arg
