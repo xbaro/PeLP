@@ -125,10 +125,10 @@ jobs:
       - name: Build and push edge image
         run: |
           # Build PeLP image
-          docker build --pull -t "xbaro/pelp:${{ github.sha }}" -f docker/Dockerfile .          
+          docker build --pull -t "ghcr.io/xbaro/pelp:${{ github.sha }}" -f docker/Dockerfile .          
           # Set the version
           echo '${{ steps.vars.outputs.version }}' > VERSION
           # Build and publish
-          docker build -t "xbaro/pelp:${{ github.sha }}" -f docker/Dockerfile --build-arg PELP_VERSION=${{ steps.vars.outputs.version }} .
-          docker push xbaro/pelp:${{ github.sha }}
+          docker build -t "ghcr.io/xbaro/pelp:${{ github.sha }}" -f docker/Dockerfile --build-arg PELP_VERSION=${{ steps.vars.outputs.version }} .
+          docker push ghcr.io/xbaro/pelp:${{ github.sha }}
       
