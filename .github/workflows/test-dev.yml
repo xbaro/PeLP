@@ -74,6 +74,9 @@ jobs:
         image: bitnami/minio:latest
         ports:
           - 9000:9000
+        env:
+          MINIO_ACCESS_KEY: minioadmin
+          MINIO_SECRET_KEY: minioadmin
     steps:    
       - uses: actions/checkout@v4
         with:
@@ -89,7 +92,7 @@ jobs:
       - name: Migrate database
         run: |
           cd src
-          cp pelp/manage.py
+          cp pelp/manage.py .
           python manage.py migrate
           export PYTHONPATH=$PYTHONPATH:$PWD
           cd ..
